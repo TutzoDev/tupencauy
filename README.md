@@ -1,4 +1,4 @@
-﻿# tupenca.uy - Proyecto web y mobile en .NET 8 (TSI Grupo 4 - Tecnólogo en Informática)
+﻿# tupenca.uy - Proyecto web y mobile en .NET 8
 
 Este proyecto consta de una plataforma con distintos sitios web, cada uno de estos contiene una serie de pencas en las que el usuario final puede apostar.
 La plataforma tiene un superadministrador que gestiona los sitios mediante un backoffice, y cada sitio tiene su propio administrador que gestiona las pencas.
