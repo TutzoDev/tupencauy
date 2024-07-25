@@ -1,0 +1,58 @@
+﻿﻿@using tupencauy.ViewModels;
+@model SitioViewModel
+
+@{
+    ViewData["Title"] = "Crear Sitio";
+}
+
+<h1>Crear sitio</h1>
+
+<h4>Sitio</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create" asp-controller="Sitios">
+            <div class="form-group">
+                <label asp-for="Nombre" class="control-label"></label>
+                <input asp-for="Nombre" class="form-control" />
+                <span asp-validation-for="Nombre" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Url" class="control-label"></label>
+                <input asp-for="Url" class="form-control" />
+                <span asp-validation-for="Url" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TipoRegistro" class="control-label"></label>
+                <select asp-for="TipoRegistro" class="form-control">
+                    <option value="Abierto">Abierto</option>
+                    <option value="Cerrado">Cerrado</option>
+                    <option value="Con aprobacion">Con aprobación</option>
+                    <option value="Invitacion Link">Invitación Link</option>
+                </select>
+                <span asp-validation-for="TipoRegistro" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ColorPrincipal" class="control-label">Color Principal</label>
+                <input asp-for="ColorPrincipal" class="form-control color-picker" type="color" />
+                <span asp-validation-for="ColorPrincipal" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ColorSecundario" class="control-label">Color Secundario</label>
+                <input asp-for="ColorSecundario" class="form-control color-picker" type="color" />
+                <span asp-validation-for="ColorSecundario" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ColorTipografia" class="control-label">Color de Tipografía</label>
+                <input asp-for="ColorTipografia" class="form-control color-picker" type="color" />
+                <span asp-validation-for="ColorTipografia" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Crear Sitio" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+<div>
+    <a asp-controller="SuperAdmin" asp-action="Sitios">Volver a la lista de sitios</a>
+</div>

@@ -1,0 +1,178 @@
+﻿@using Microsoft.AspNetCore.Identity
+@using tupencauy.Data
+@inject SignInManager<AppUser> signInManager
+@inject UserManager<AppUser> userManager
+@inject AppDbContext context
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - tupencauy</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/tupencauy.styles.css" asp-append-version="true" />
+
+
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+            <div class="container-fluid">
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">tupencauy</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav ms-auto">
+                        @if (signInManager.IsSignedIn(User))
+                        {
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" id="notificacionesDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    Notificaciones <span class="badge bg-danger" id="notificacionesBadge">@ViewData["NotificacionesCount"]</span>
+                                </a>
+                                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="notificacionesDropdown" id="notificacionesMenu">
+                                    @{
+                                        var notificaciones = context.Notificaciones.Where(n => n.UsuarioId == userManager.GetUserId(User)).OrderByDescending(n => n.FechaCreacion).ToList();
+                                        if (notificaciones.Any())
+                                        {
+                                            foreach (var notificacion in notificaciones)
+                                            {
+                                                <li class="dropdown-item @(notificacion.Leida ? "" : "font-weight-bold")">@notificacion.Mensaje</li>
+                                            }
+                                        }
+                                        else
+                                        {
+                                            <li class="dropdown-item no-notificaciones">No hay nuevas notificaciones</li>
+                                        }
+                                    }
+                                </ul>
+                            </li>
+                        }
+                        @if (!signInManager.IsSignedIn(User))
+                        {
+                            <li class="nav-item">
+                                <a class="btn btn-info btn-lg me-2" asp-area="" asp-controller="SuperAdmin" asp-action="Login">Login SuperAdmin</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="btn btn-success btn-lg me-2" asp-area="" asp-controller="Sitios" asp-action="RequestSite">Solicitar sitio</a>
+                            </li>
+                        }
+                        <partial name="_LoginPartial" />
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+    <div class="container">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+
+    <footer class="border-top footer text-muted">
+        <div class="container">
+            &copy; 2024 - tupencauy - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+        </div>
+    </footer>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/5.0.9/signalr.min.js"></script>
+    <script>
+        let signalRConnection = null;
+
+        document.addEventListener("DOMContentLoaded", function () {
+            function askNotificationPermission() {
+                if (Notification.permission === "default") {
+                    Notification.requestPermission().then(function (permission) {
+                        if (permission !== "granted") {
+                            alert("Por favor, habilita las notificaciones para recibir alertas.");
+                        }
+                    });
+                } else if (Notification.permission === "denied") {
+                    alert("Tienes las notificaciones bloqueadas. Por favor, habilítalas en la configuración de tu navegador.");
+                }
+            }
+
+            askNotificationPermission();
+
+            // Verificar si la conexión SignalR no está establecida antes de crearla
+            if (!signalRConnection) {
+                signalRConnection = new signalR.HubConnectionBuilder()
+                    .withUrl("/notificacionHub")  // URL del hub de SignalR
+                    .build();
+
+                signalRConnection.start().then(function () {
+                    console.log("Conexión establecida con el servidor de SignalR.");
+                }).catch(function (err) {
+                    return console.error(err.toString());
+                });
+
+                // Manejo del evento RecibirNotificacion
+                signalRConnection.on("RecibirNotificacion", function (mensaje) {
+                    // Mostrar notificación en el navegador si tiene permiso
+                    if (Notification.permission === "granted") {
+                        new Notification("Nueva notificación", {
+                            body: mensaje,
+                            icon: "/path/to/icon.png"  // Opcional: URL a un ícono
+                        });
+                    } else {
+                        alert("Nueva notificación: " + mensaje);
+                    }
+
+                    // Actualizar contador de notificaciones en el navbar
+                    var badge = document.getElementById("notificacionesBadge");
+                    var count = parseInt(badge.textContent) || 0; // Asegurar que sea un número válido
+                    badge.textContent = count + 1;
+                    badge.classList.add("bg-danger");
+
+                    // Actualizar lista desplegable de notificaciones
+                    var dropdownMenu = document.getElementById("notificacionesMenu");
+
+                    // Crear nuevo elemento de notificación
+                    var notificacionItem = document.createElement("li");
+                    notificacionItem.className = "dropdown-item font-weight-bold";
+                    notificacionItem.textContent = mensaje;
+
+                    // Insertar nuevo elemento al principio de la lista
+                    dropdownMenu.insertBefore(notificacionItem, dropdownMenu.firstChild);
+
+                    // Remover mensaje de "No hay nuevas notificaciones" si existe
+                    var noNotificacionesItem = dropdownMenu.querySelector(".no-notificaciones");
+                    if (noNotificacionesItem) {
+                        noNotificacionesItem.remove();
+                    }
+                });
+            }
+
+            // Evento al mostrar el menú desplegable de notificaciones
+           /* document.getElementById("notificacionesDropdown").addEventListener("show.bs.dropdown", function () {
+                fetch('/Notificaciones/MarcarTodasComoLeidas', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'RequestVerificationToken': $('input[name="__RequestVerificationToken"]').val()
+                    }
+                }).then(response => {
+                    if (response.ok) {
+                        var badge = document.getElementById("notificacionesBadge");
+                        badge.textContent = 0;
+                        badge.classList.remove("bg-danger");
+
+                        var dropdownMenu = document.getElementById("notificacionesMenu");
+                        dropdownMenu.innerHTML = '<li class="dropdown-item no-notificaciones">No hay nuevas notificaciones</li>';
+                    } else {
+                        console.error('Error al marcar todas las notificaciones como leídas:', response.status);
+                    }
+                }).catch(error => {
+                    console.error('Error en la solicitud POST:', error);
+                });
+            });*/
+        });
+    </script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

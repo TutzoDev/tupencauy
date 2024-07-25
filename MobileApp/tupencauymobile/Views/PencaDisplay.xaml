@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="tupencauymobile.Views.PencaDisplay"
+             xmlns:model="clr-namespace:tupencauymobile.Models"
+             xmlns:viewmodel="clr-namespace:tupencauymobile.ViewModels"
+             x:DataType="viewmodel:PencaDisplayVM">
+
+    <ContentPage.ToolbarItems>
+        <ToolbarItem IconImageSource="profileimage.png"
+                     Order="Primary"
+                     Priority="1"
+                     Clicked="OnProfileClicked" />
+    </ContentPage.ToolbarItems>
+
+    <ContentPage.Content>
+        <ScrollView>
+            <StackLayout Padding="10">
+                <Frame Margin="10" Padding="10" BorderColor="Black" BackgroundColor="MediumPurple" HeightRequest="600">
+                    <ScrollView>
+                        <StackLayout Padding="10">
+                            <Label Text="Tabla de posiciones"
+                                   FontAttributes="Bold"
+                                   FontSize="Large"
+                                   HorizontalOptions="Start"
+                                   Margin="10"/>
+                            <CollectionView ItemsSource="{Binding Posiciones}">
+                                <CollectionView.Header>
+                                    <Grid ColumnSpacing="6" Padding="10" BackgroundColor="White">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="3*"/>
+                                            <ColumnDefinition Width="3*"/>
+                                            <ColumnDefinition Width="3*"/>
+                                        </Grid.ColumnDefinitions>
+                                        <Label Grid.Column="0" Text="Usuario" FontSize="Medium" FontAttributes="Bold" HorizontalOptions="Start"/>
+                                        <Label Grid.Column="1" Text="Aciertos" FontSize="Medium" FontAttributes="Bold" HorizontalOptions="Center"/>
+                                        <Label Grid.Column="2" Text="Puntaje" FontSize="Medium" FontAttributes="Bold" HorizontalOptions="End"/>
+                                    </Grid>
+                                </CollectionView.Header>
+                                <CollectionView.ItemTemplate>
+                                    <DataTemplate x:DataType="model:PosicionPenca">
+                                        <Grid ColumnSpacing="10" Padding="10" BackgroundColor="White">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="3*"/>
+                                                <ColumnDefinition Width="3*"/>
+                                                <ColumnDefinition Width="3*"/>
+                                            </Grid.ColumnDefinitions>
+                                            <ScrollView Orientation="Horizontal">
+                                                <Label Grid.Column="0" Text="{Binding NombreUsuario}" FontSize="Medium" HorizontalOptions="Start"/>
+                                            </ScrollView>
+                                            <Label Grid.Column="1" Text="{Binding Aciertos}" FontSize="Medium" HorizontalOptions="Center"/>
+                                            <Label Grid.Column="2" Text="{Binding Puntaje}" FontSize="Medium" HorizontalOptions="Center"/>
+                                        </Grid>
+                                    </DataTemplate>
+                                </CollectionView.ItemTemplate>
+                            </CollectionView>
+                        </StackLayout>
+                    </ScrollView>
+                </Frame>
+
+                <Label Text="Eventos Deportivos"
+                       FontSize="Large"
+                       HorizontalOptions="Start"
+                       Margin="10"/>
+                <CollectionView ItemsSource="{Binding Eventos}">
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate x:DataType="model:UnoVsUno">
+                            <Frame Margin="5" Padding="10" BackgroundColor="MediumPurple" BorderColor="Black">
+                                <Frame.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:PencaDisplayVM}}, Path=EventoClickedCommand}" CommandParameter="{Binding Id}"/>
+                                </Frame.GestureRecognizers>
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto" />
+                                        <RowDefinition Height="Auto" />
+                                        <RowDefinition Height="Auto" />
+                                        <RowDefinition Height="Auto" />
+                                    </Grid.RowDefinitions>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="Auto" />
+                                    </Grid.ColumnDefinitions>
+
+                                    <Label Text="{Binding Nombre}" FontSize="Medium" FontAttributes="Bold" Grid.Row="0" Grid.Column="0" HorizontalOptions="Start"/>
+                                    <Label Text="{Binding Deporte}" FontSize="Small" Grid.Row="0" Grid.Column="1" HorizontalOptions="End"/>
+
+                                    <HorizontalStackLayout Grid.Row="1" Grid.ColumnSpan="2">
+                                        <Label Text="{Binding FechaInicio, StringFormat='{0:dd/MM/yyyy}'}" FontSize="Small" FontAttributes="Bold" VerticalTextAlignment="End"/>
+                                        <Label Text="-" FontSize="Medium"/>
+                                        <Label Text="{Binding FechaFin, StringFormat='{0:dd/MM/yyyy}'}" FontSize="Small" FontAttributes="Bold" VerticalTextAlignment="End"/>
+                                    </HorizontalStackLayout>
+
+                                    <HorizontalStackLayout Grid.Row="2" Grid.ColumnSpan="2" HorizontalOptions="Center">
+                                        <Label HorizontalOptions="Center" FontAttributes="Bold" FontSize="Medium" TextColor="Black">
+                                            <Label.Text>
+                                                <MultiBinding StringFormat="{}{0} - {1}">
+                                                    <Binding Path="EquipoUno"/>
+                                                    <Binding Path="EquipoDos"/>
+                                                </MultiBinding>
+                                            </Label.Text>
+                                        </Label>
+                                    </HorizontalStackLayout>
+
+                                    <HorizontalStackLayout Grid.Row="3" Grid.ColumnSpan="2" HorizontalOptions="Center">
+                                        <Label VerticalOptions="Center" HorizontalOptions="Center" FontAttributes="Bold" FontSize="Medium" TextColor="Black">
+                                            <Label.Text>
+                                                <MultiBinding StringFormat="{}{0} - {1}">
+                                                    <Binding Path="ScoreUno"/>
+                                                    <Binding Path="ScoreDos"/>
+                                                </MultiBinding>
+                                            </Label.Text>
+                                        </Label>
+                                    </HorizontalStackLayout>
+                                </Grid>
+                            </Frame>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+            </StackLayout>
+        </ScrollView>
+    </ContentPage.Content>
+    <!--<ActivityIndicator IsVisible="{Binding Ocupado}"
+       IsRunning="{Binding Ocupado}"
+       HorizontalOptions="FillAndExpand"
+       VerticalOptions="CenterAndExpand"
+       Grid.RowSpan="2"
+       Grid.ColumnSpan="2"/>-->
+</ContentPage>

@@ -1,0 +1,83 @@
+﻿@using tupencauy.ViewModels
+@using Microsoft.AspNetCore.Identity
+@model IndexViewModel
+@inject SignInManager<AppUser> signInManager
+
+@{
+    ViewData["Title"] = "tupenca.uy";
+}
+
+<div class="container">
+    <main>
+        <div class="text-center">
+            <h2>Bienvenidos a tupenca.uy</h2>
+            <p class="lead">Tu sitio de pencas deportivas</p>
+        </div>
+
+        @if (!signInManager.IsSignedIn(User))
+        {
+            <div>
+                <p class="lead">Podes registrarte en cualquiera de los siguientes sitios:</p>
+            </div>
+            <div class="container mt-4">
+                <div class="row">
+                    @foreach (var sitio in Model.Sitios)
+                    {
+                        <div class="col-md-4 mb-3">
+                            <div class="card">
+                                <div class="card-body text-center">
+                                    <h5 class="card-title">@sitio.Nombre</h5>
+                                    <p class="card-text"><em>@sitio.Url</em></p>
+                                    <a href="@sitio.Url" class="btn btn-primary">Entrar</a>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        }
+        else
+        {
+            <div>
+                <h3>Notificaciones</h3>
+                @if (Model.Notificaciones.Any())
+                {
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Mensaje</th>
+                                <th>Fecha de Creación</th>
+                                <th>Fecha de Envío</th>
+                                <th>Sitio</th>
+                                <th>Leída</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var notificacion in Model.Notificaciones)
+                            {
+                                <tr>
+                                    <td>@notificacion.Id</td>
+                                    <td>@notificacion.Mensaje</td>
+                                    <td>@notificacion.FechaCreacion</td>
+                                    <td>@notificacion.FechaEnvio</td>
+                                    <td>@notificacion.SitioNombre</td>
+                                    <td>@notificacion.Leida ? "Sí" : "No"</td>
+                                    <td>
+                                        <a asp-action="Editar" asp-controller="Notificaciones" asp-route-id="@notificacion.Id" class="btn btn-primary">Editar</a>
+                                        <a asp-action="Ver" asp-controller="Notificaciones" asp-route-id="@notificacion.Id" class="btn btn-info">Ver</a>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                }
+                else
+                {
+                    <p>No tienes notificaciones.</p>
+                }
+            </div>
+        }
+    </main>
+</div>

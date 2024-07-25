@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro - TuPenca UY</title>
+    <link rel="stylesheet" href="../css/styles.css">
+    <link href="../css/estilo-background.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-xl-6 col-lg-7 col-md-9">
+                <div class="card o-hidden border-0 shadow-lg my-5">
+                    <div class="card-body p-0">
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="p-5">
+                                    <div class="text-center">
+                                        <h1 class="h4 text-gray-900 mb-4">Crea tu cuenta</h1>
+                                    </div>
+                                    <form id="registerForm">
+                                        <div class="form-group">
+                                            <input type="text" class="form-control form-control-user" id="nombre" placeholder="Nombre" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <input type="text" class="form-control form-control-user" id="username" placeholder="Nombre de usuario" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <input type="email" class="form-control form-control-user" id="email" placeholder="Correo electrónico" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <input type="password" class="form-control form-control-user" id="password" placeholder="Contraseña" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <input type="password" class="form-control form-control-user" id="confirmPassword" placeholder="Confirmar contraseña" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <input type="hidden" id="tenantId" value="">
+                                        </div>
+                                        <button type="submit" class="btn btn-primary btn-user btn-block">Registrarse</button>
+                                    </form>
+                                    <hr>
+                                    <div class="text-center">
+                                        <a class="small" href="login.html">¿Ya tienes una cuenta? Inicia sesión</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Núcleo de JavaScript -->
+    <script src="../vendor/jquery/jquery.min.js"></script>
+    <script src="../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="../vendor/jquery-easing/jquery.easing.min.js"></script>
+    <script src="../js/auth.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const tenantId = localStorage.getItem('tenantId');
+            if (!tenantId) {
+                // Si no hay tenantId, redirigir a la página de selección de sitios
+                window.location.href = 'sitios.html';
+            } else {
+                // Establecer el tenantId en el formulario de registro
+                document.getElementById('tenantId').value = tenantId;
+            }
+        });
+    </script>
+</body>
+</html>

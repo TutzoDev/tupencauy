@@ -1,0 +1,74 @@
+﻿@model tupencauy.ViewModels.EventoDeportivoVM
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Editar</h1>
+
+<h4>Evento Deportivo</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <input type="hidden" asp-for="Id" />
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <!-- Combobox para seleccionar tipo de evento -->
+            <div class="form-group">
+                <label asp-for="TipoDeEvento" class="control-label"></label>
+                <select asp-for="TipoDeEvento" class="form-control" asp-items="Html.GetEnumSelectList<tupencauy.ViewModels.EventoDeportivoVM.TipoEvento>()" id="TipoDeEvento"></select>
+                <span asp-validation-for="TipoDeEvento" class="text-danger"></span>
+            </div>
+
+            <!-- Sección de uno vs uno -->
+            <div id="unoVsUnoFields">
+                <div class="form-group">
+                    <label asp-for="Nombre" class="control-label"></label>
+                    <input asp-for="Nombre" class="form-control" />
+                    <span asp-validation-for="Nombre" class="text-danger"></span>
+                </div>
+
+                <!-- Combobox para seleccionar tipo de deporte -->
+                <div class="form-group">
+                    <label asp-for="TipoDeDeporte" class="control-label"></label>
+                    <select asp-for="TipoDeDeporte" class="form-control" asp-items="Html.GetEnumSelectList<tupencauy.ViewModels.EventoDeportivoVM.Deporte>()"></select>
+                    <span asp-validation-for="TipoDeDeporte" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="EquipoUno" class="control-label"></label>
+                    <input asp-for="EquipoUno" class="form-control" />
+                    <span asp-validation-for="EquipoUno" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="EquipoDos" class="control-label"></label>
+                    <input asp-for="EquipoDos" class="form-control" />
+                    <span asp-validation-for="EquipoDos" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="FechaInicio" class="control-label"></label>
+                    <input type="datetime-local" asp-for="FechaInicio" class="form-control" />
+                    <span asp-validation-for="FechaInicio" class="text-danger"></span>
+                </div>
+            </div>
+
+            <!-- Sección de free for all -->
+            <div id="freeForAllFields" style="display: none;">
+                <!-- Aquí puedes añadir más campos según lo necesites para free for all -->
+                <p>Por ahora nada</p>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Guardar" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-controller="SuperAdmin" asp-action="EventosDeportivos">Volver a la lista de eventos deportivos</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

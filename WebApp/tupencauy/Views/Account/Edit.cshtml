@@ -1,0 +1,30 @@
+﻿@model tupencauy.ViewModels.EditUserVM
+
+<h1>Editar Usuario</h1>
+
+<form asp-controller="Account" asp-action="Edit" method="post">
+    <input type="hidden" asp-for="Id" />
+
+    <div>
+        <label asp-for="Nombre"></label>
+        <input asp-for="Nombre" />
+        <span asp-validation-for="Nombre"></span>
+    </div>
+
+    <div>
+        <label asp-for="UserName"></label>
+        <input asp-for="UserName" />
+        <span asp-validation-for="UserName"></span>
+    </div>
+
+    <div>
+        <label asp-for="Email"></label>
+        <input asp-for="Email" />
+        <span asp-validation-for="Email"></span>
+    </div>
+
+    <!-- Agregar más campos de formulario según sea necesario -->
+
+    <button type="submit">Guardar cambios</button>
+</form>
+<a asp-controller="SuperAdmin" asp-action="Usuarios">Volver a la lista de usuarios</a>

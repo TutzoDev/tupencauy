@@ -1,0 +1,117 @@
+﻿@model tupencauy.ViewModels.RequestSitioViewModel
+
+@{
+    ViewData["Title"] = "Crear Sitio y Registrar Usuario";
+}
+
+<div class="container">
+    <main>
+        <div class="py-5 text-center">
+            <h2>Crear sitio y registrar usuario</h2>
+            <p class="lead">Para solicitar un sitio y registrar un usuario administrador, completa los siguientes formularios. Una vez enviada la solicitud, será revisada por nuestro equipo para su posterior aprobación.</p>
+        </div>
+        <form asp-action="RequestSite" method="post" class="needs-validation" novalidate>
+            @Html.AntiForgeryToken()
+            <div class="row justify-content-center">
+                <!-- Columna izquierda para la información de usuario -->
+                <div class="col-md-5">
+                    <h4 class="mb-3">Información de usuario</h4>
+
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                    <div class="row g-3">
+                        <div class="col-12">
+                            <label asp-for="Nombre" class="form-label"></label>
+                            <input asp-for="Nombre" class="form-control" required>
+                            <span asp-validation-for="Nombre" class="text-danger"></span>
+                        </div>
+
+                        <div class="col-12">
+                            <label asp-for="Username" class="form-label"></label>
+                            <input asp-for="Username" class="form-control" required>
+                            <span asp-validation-for="Username" class="text-danger"></span>
+                        </div>
+
+                        <div class="col-12">
+                            <label asp-for="Email" class="form-label"></label>
+                            <input asp-for="Email" class="form-control" required>
+                            <span asp-validation-for="Email" class="text-danger"></span>
+                        </div>
+
+                        <div class="col-12">
+                            <label asp-for="Password" class="form-label"></label>
+                            <input asp-for="Password" class="form-control" required>
+                            <span asp-validation-for="Password" class="text-danger"></span>
+                        </div>
+
+                        <div class="col-12">
+                            <label asp-for="ConfirmPassword" class="form-label"></label>
+                            <input asp-for="ConfirmPassword" class="form-control" required>
+                            <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Columna derecha para la información del sitio -->
+                <div class="col-md-7">
+                    <h4 class="mb-3">Información del sitio</h4>
+
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <label asp-for="NombreSitio" class="form-label">Nombre Sitio</label>
+                            <input asp-for="NombreSitio" class="form-control" required>
+                            <span asp-validation-for="NombreSitio" class="text-danger"></span>
+                        </div>
+
+                        <div class="col-md-6">
+                            <label asp-for="Url" class="form-label"></label>
+                            <input asp-for="Url" class="form-control" required>
+                            <span asp-validation-for="Url" class="text-danger"></span>
+                        </div>
+
+                        <div class="col-md-4">
+                            <label asp-for="TipoRegistro" class="form-label"></label>
+                            <select asp-for="TipoRegistro" class="form-select" required>
+                                <option value="">Selecciona...</option>
+                                <option value="Abierto">Abierto</option>
+                                <option value="Cerrado">Cerrado</option>
+                                <option value="Con aprobacion">Con aprobación</option>
+                                <option value="Invitación Link">Invitación Link</option>
+                            </select>
+                            <span asp-validation-for="TipoRegistro" class="text-danger"></span>
+                        </div>
+
+                        <div class="col-md-4">
+                            <label asp-for="ColorPrincipal" class="form-label"></label>
+                            <input asp-for="ColorPrincipal" type="color" class="form-control" required>
+                            <span asp-validation-for="ColorPrincipal" class="text-danger"></span>
+                        </div>
+
+                        <div class="col-md-4">
+                            <label asp-for="ColorSecundario" class="form-label"></label>
+                            <input asp-for="ColorSecundario" type="color" class="form-control" required>
+                            <span asp-validation-for="ColorSecundario" class="text-danger"></span>
+                        </div>
+
+                        <div class="col-md-4">
+                            <label asp-for="ColorTipografia" class="form-label"></label>
+                            <input asp-for="ColorTipografia" type="color" class="form-control" required>
+                            <span asp-validation-for="ColorTipografia" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+                <button class="btn btn-primary btn-lg btn-block mt-3" type="submit">Solicitar Sitio y Registrar Usuario</button>
+
+            </div>
+
+        </form>
+    </main>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

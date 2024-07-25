@@ -1,0 +1,37 @@
+﻿@model tupencauy.ViewModels.AdminViewModel
+
+@{
+    ViewData["Title"] = "Pencas";
+}
+
+<h1>Panel de pencas - tupenca.uy</h1>
+<table class="table">
+    <thead>
+        <tr>
+            <th>@Html.DisplayNameFor(model => model.PencasSitio.First().Nombre)</th>
+            <th>@Html.DisplayNameFor(model => model.PencasSitio.First().Costo)</th>
+            <th>@Html.DisplayNameFor(model => model.PencasSitio.First().Comision)</th>
+            <th>@Html.DisplayNameFor(model => model.PencasSitio.First().Premio)</th>
+            <th>@Html.DisplayNameFor(model => model.PencasSitio.First().Recaudacion)</th>
+            <th>@Html.DisplayNameFor(model => model.PencasSitio.First().Inscriptos)</th>
+            <th>Acción</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var pencasSitio in Model.PencasSitio)
+        {
+            <tr>
+                <td>@pencasSitio.Nombre</td>
+                <td>@pencasSitio.Costo</td>
+                <td>@pencasSitio.Comision</td>
+                <td>@pencasSitio.Premio</td>
+                <td>@pencasSitio.Inscriptos</td>
+                <td>$ @pencasSitio.Recaudacion</td>
+                <td>
+                    <a asp-action="EditPencaSitio" asp-controller="Admin" asp-route-id="@pencasSitio.Id">Editar penca</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

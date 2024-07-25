@@ -1,0 +1,12 @@
+﻿@model tupencauy.Models.AppUser
+
+<h1>Confirmar Eliminación</h1>
+
+<p>¿Estás seguro de que deseas eliminar el usuario <strong>@Model.Name</strong>?</p>
+
+<form asp-action="DeleteConfirmed" method="post">
+    <input type="hidden" asp-for="Id" />
+    <button type="submit">Confirmar Eliminación</button>
+</form>
+
+<a asp-controller="SuperAdmin" asp-action="Usuarios">Volver a la lista de usuarios</a>

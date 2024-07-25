@@ -1,0 +1,41 @@
+﻿@model IEnumerable<tupencauy.Models.Penca>
+
+@{
+    ViewData["Title"] = "Pencas";
+}
+
+<h1>Pencas</h1>
+
+<p>
+    <a asp-controller="Penca" asp-action="Create">Crear nueva penca</a>
+</p>
+<table class="table">
+    <thead>
+        <tr> 
+            <th>
+                @Html.DisplayNameFor(model => model.Nombre)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+                @foreach (var item in Model){
+                    <tr>
+                        <td>
+                        @Html.DisplayFor(modelItem => item.Nombre)
+                    </td>
+                    <td>
+                        <a asp-controller="Penca" asp-action="Edit" asp-route-id="@item.Id">Editar</a> |
+                        <a asp-controller="Penca" asp-action="Details" asp-route-id="@item.Id">Detalles</a> |
+                        <a asp-controller="Penca" asp-action="Delete" asp-route-id="@item.Id">Borrar</a>
+                    </td>
+                    <td>
+                    <form asp-action="FinalizarPenca" asp-controller="SuperAdmin" method="post">
+                        <input type="hidden" name="id" value="@item.Id" />
+                        <button type="submit" class="btn btn-success">Finalizar penca</button>
+                    </form>
+                    </td>
+                </tr>
+                }
+    </tbody>
+</table>

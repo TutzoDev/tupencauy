@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewmodel="clr-namespace:tupencauymobile.ViewModels"
+             x:Class="tupencauymobile.Views.PerfilUsuario"
+             x:DataType="viewmodel:UsuarioVM"
+             Shell.NavBarIsVisible="False"
+             Title="{Binding Titulo}">
+    
+    <VerticalStackLayout>
+        <VerticalStackLayout Padding="20" Spacing="20" VerticalOptions="StartAndExpand">
+            <Label Text="Mi perfil" FontSize="32"/>
+            <HorizontalStackLayout Spacing="5">
+                <VerticalStackLayout Spacing="20">
+                    <Label Text="Email:" FontSize="Large" />
+                    <Label Text="Nombre:" FontSize="Large" />
+                    <Label Text="Username:" FontSize="21" />
+                </VerticalStackLayout>
+                <VerticalStackLayout WidthRequest="220" Spacing="20">
+                    <ScrollView Orientation="Horizontal">
+                        <Label Text="{Binding Email}" FontSize="Large" />
+                    </ScrollView>
+                    <Label Text="{Binding NombreUsuario}" FontSize="Large" />
+                    <Label Text="{Binding Username}" FontSize="Large" />
+                </VerticalStackLayout>
+            </HorizontalStackLayout>
+        </VerticalStackLayout>
+
+        <VerticalStackLayout Padding="20">
+            <HorizontalStackLayout Spacing="20">
+                <Label Text="Notificaciones" 
+                       FontSize="Medium"
+                       VerticalOptions="Center"/>
+                <Switch IsToggled="{Binding AreNotificationsEnabled}" />
+            </HorizontalStackLayout>
+
+            <VerticalStackLayout HorizontalOptions="Center">
+                <HorizontalStackLayout Spacing="20">
+                    <Label  Text="Recordatorio predicciones" 
+                FontSize="Medium"
+                VerticalOptions="Center"/>
+                    <Switch IsToggled="{Binding IsButton1Enabled}"
+                            IsEnabled="{Binding AreNotificationsEnabled}"/>
+                            </HorizontalStackLayout>
+
+                <HorizontalStackLayout Spacing="20">
+                    <Label  Text="Resultado de eventos" 
+                             FontSize="Medium"
+                             VerticalOptions="Center"/>
+                    <Switch IsToggled="{Binding IsButton2Enabled}"
+                            IsEnabled="{Binding AreNotificationsEnabled}" />
+                </HorizontalStackLayout>
+
+                <HorizontalStackLayout Spacing="20">
+                    <Label   Text="Resumen de estadísticas" 
+                             FontSize="Medium"
+                             VerticalOptions="Center"/>
+                    <Switch IsToggled="{Binding IsButton3Enabled}"
+                            IsEnabled="{Binding AreNotificationsEnabled}" />
+                </HorizontalStackLayout>
+            </VerticalStackLayout>
+        </VerticalStackLayout>
+            
+
+        <VerticalStackLayout Padding="20">
+            <Button  Text="Cerrar Sesión" 
+                     Clicked="OnLogoutClicked"
+                     FontSize="Medium" 
+                     BackgroundColor="Red" 
+                     TextColor="White"
+                     VerticalOptions="End"/>
+        </VerticalStackLayout>
+    </VerticalStackLayout>
+    
+</ContentPage>

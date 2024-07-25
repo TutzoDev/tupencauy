@@ -1,0 +1,90 @@
+﻿@model tupencauy.ViewModels.PencaEventoVM
+
+@{
+    ViewData["Title"] = "Crear penca";
+}
+
+<h1>Crear penca</h1>
+
+<h4>Penca</h4>
+<hr />
+<div class="row">
+    <div class="col-md-6">
+        <form asp-controller="Penca" asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <!-- Campo para el nombre de la penca -->
+            <div class="form-group">
+                <label asp-for="Nombre" class="control-label"></label>
+                <input asp-for="Nombre" class="form-control" />
+                <span asp-validation-for="Nombre" class="text-danger"></span>
+            </div>
+            <!-- Input oculto para almacenar los IDs de los eventos seleccionados -->
+            <input type="hidden" asp-for="SelectedEventsId" />
+
+            <!-- Botón para crear la penca -->
+            <div class="form-group">
+                <input type="submit" value="Crear" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+    <!-- Lista de eventos deportivos como tarjetas -->
+    <div class="col-md-6" style="overflow-y: auto; max-height: 500px;">
+        <label class="control-label">Selecciona los eventos:</label>
+        <div class="list-group">
+            @foreach (var evento in Model.Eventos)
+            {
+                <div class="list-group-item evento-card" data-id="@evento.Id">
+                    <div class="d-flex w-100 justify-content-between">
+                        <h5 class="mb-1">@evento.Nombre</h5>
+                    </div>
+                    <p class="mb-1">@evento.EquipoUno vs @evento.EquipoDos</p>
+                    <small>@evento.Fecha.ToString("dd/MM/yyyy")</small>
+                </div>
+            }
+        </div>
+    </div>
+
+    <div>
+        <a asp-controller="SuperAdmin" asp-action="Pencas">Volver a la lista de pencas</a>
+    </div>
+
+    @section Scripts {
+        @{
+            await Html.RenderPartialAsync("_ValidationScriptsPartial");
+        }
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                var selectedEventsId = [];
+                var selectedEventsInput = document.querySelector('input[name="SelectedEventsId"]');
+
+                document.querySelectorAll('.evento-card').forEach(function (card) {
+                    card.addEventListener('click', function () {
+                        var eventId = this.getAttribute('data-id');
+
+                        if (selectedEventsId.includes(eventId)) {
+                            selectedEventsId = selectedEventsId.filter(id => id !== eventId);
+                            this.classList.remove('bg-success');
+                        } else {
+                            selectedEventsId.push(eventId);
+                            this.classList.add('bg-success');
+                        }
+
+                        selectedEventsInput.value = selectedEventsId.join(',');
+                    });
+                });
+            });
+        </script>
+    }
+
+    <style>
+        .evento-card {
+            cursor: pointer;
+            margin-bottom: 10px;
+        }
+
+            .evento-card.bg-success {
+                background-color: green;
+                color: white;
+            }
+    </style>

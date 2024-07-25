@@ -1,0 +1,30 @@
+﻿@using tupencauy.ViewModels;
+@model Sitio
+
+@{
+    ViewData["Title"] = "Detalles de sitios";
+}
+
+<h1>Detalles de sitios</h1>
+
+<div>
+    <h4>Sitio Personalizado</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Nombre)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Nombre)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Url)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Url)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-controller="SuperAdmin" asp-action="Sitios">Volver a la lista de sitios</a>
+</div>

@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pencas Disponibles - Pencas Deportivas</title>
+
+    <!-- Fuentes personalizadas para esta plantilla -->
+    <link href="../vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Nunito:200,300,400,600,700,800,900" rel="stylesheet">
+
+    <!-- Estilos personalizados para esta plantilla -->
+    <link href="../css/sb-admin-2.min.css" rel="stylesheet">
+    <link href="../css/styles.css" rel="stylesheet">
+
+    <!-- Estilos dinámicos se inyectarán aquí -->
+    <style id="dynamic-styles"></style>
+</head>
+
+<body id="page-top">
+
+    <!-- Contenedor de la página -->
+    <div id="wrapper">
+
+        <!-- Barra lateral -->
+        <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+
+            <!-- Barra lateral - Marca -->
+            <div class="sidebar-brand d-flex align-items-center justify-content-center">
+                <div class="sidebar-brand-icon">
+                    <img src="../images/logo.png" alt="Logo" style="width: 40px; height: 40px;">
+                </div>
+                <div class="sidebar-brand-text mx-3" id="siteName">TuPenca UY</div>
+            </div>
+
+            <!-- Divisor -->
+            <hr class="sidebar-divider my-0">
+
+            <!-- Opción de menú - Pencas disponibles -->
+            <li class="nav-item active">
+                <a class="nav-link" href="pencas-disponibles.html">
+                    <i class="fas fa-fw fa-list"></i>
+                    <span>Pencas disponibles</span>
+                </a>
+            </li>
+
+            <!-- Opción de menú - Tabla de posiciones Pencas -->
+            <li class="nav-item">
+                <a class="nav-link" href="historial-apuestas.html">
+                    <i class="fas fa-fw fa-trophy"></i>
+                    <span>Tabla de posiciones Pencas</span>
+                </a>
+            </li>
+
+            <!-- Opción de menú - Ajustes del perfil -->
+            <li class="nav-item">
+                <a class="nav-link" href="ajustes-perfil.html">
+                    <i class="fas fa-fw fa-user"></i>
+                    <span>Ajustes del perfil</span>
+                </a>
+            </li>
+
+            <!-- Divisor -->
+            <hr class="sidebar-divider">
+
+            <!-- Alternador de la barra lateral -->
+            <div class="text-center d-none d-md-inline">
+                <button class="rounded-circle border-0" id="sidebarToggle"></button>
+            </div>
+
+            <!-- Opción de menú - Volver a todos los sitios -->
+            <li class="nav-item">
+                <a class="nav-link" href="sitios.html" onclick="logoutAndRedirect()">
+                    <i class="fas fa-fw fa-sign-out-alt"></i>
+                    <span>Volver a todos los sitios</span>
+                </a>
+            </li>
+
+        </ul>
+
+        <!-- Fin de la barra lateral -->
+        <!-- Contenedor de contenido -->
+        <div id="content-wrapper" class="d-flex flex-column">
+
+            <!-- Contenido principal -->
+            <div id="content">
+
+                <!-- Barra superior -->
+                <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+                    <ul class="navbar-nav ml-auto">
+                        <li class="nav-item dropdown no-arrow d-sm-none">
+                            <a class="nav-link dropdown-toggle" href="#" id="searchDropdown" role="button"
+                               data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i class="fas fa-search fa-fw"></i>
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-right p-3 shadow animated--grow-in"
+                                 aria-labelledby="searchDropdown">
+                                <form class="form-inline mr-auto w-100 navbar-search">
+                                    <div class="input-group">
+                                        <input type="text" class="form-control bg-light border-0 small"
+                                               placeholder="Search for..." aria-label="Search"
+                                               aria-describedby="basic-addon2">
+                                        <div class="input-group-append">
+                                            <button class="btn btn-primary" type="button">
+                                                <i class="fas fa-search fa-sm"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </li>
+
+                        <!-- Dropdown de Notificaciones -->
+                        <li class="nav-item dropdown no-arrow mx-1">
+                            <a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button" data-toggle="dropdown"
+                               aria-haspopup="true" aria-expanded="false">
+                                <i class="fas fa-bell fa-fw"></i>
+                                <span class="badge badge-danger badge-counter" id="notificacionesBadge">0</span>
+                            </a>
+                            <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
+                                 aria-labelledby="alertsDropdown">
+                                <h6 class="dropdown-header">Notificaciones</h6>
+                                <div id="notificationList" class="mt-3">
+                                    <!-- Aquí se cargarán las notificaciones dinámicamente -->
+                                </div>
+                                <a class="dropdown-item text-center small text-gray-500" href="#">Mostrar todas las notificaciones</a>
+                            </div>
+                        </li>
+
+
+                        <!-- Información del usuario -->
+                        <li class="nav-item dropdown no-arrow">
+                            <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
+                               data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <span class="mr-2 d-none d-lg-inline text-gray-600 small" id="userName">Usuario</span>
+                                <img class="img-profile rounded-circle" id="userProfileImage" src="">
+                            </a>
+                            <!-- Dropdown - Información del usuario -->
+                            <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
+                                 aria-labelledby="userDropdown">
+                                <a class="dropdown-item" href="ajustes-perfil.html">
+                                    <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
+                                    Perfil
+                                </a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="sitios.html" onclick="logoutAndRedirect()">
+                                    <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+                                    Cerrar sesión
+                                </a>
+                            </div>
+                        </li>
+
+                        <!-- Saldo disponible -->
+                        <li class="nav-item dropdown no-arrow mx-1">
+                            <div class="nav-link">
+                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">Saldo disponible: $<span id="saldoDisponible">0.00</span></span>
+                            </div>
+                        </li>
+
+                    </ul>
+                </nav>
+                <!-- Fin de la barra superior -->
+                <!-- Inicio del contenido de la página -->
+                <div class="container-fluid">
+
+                    <!-- Encabezado de la página -->
+                    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+                        <h1 class="h3 mb-0 text-gray-800">Pencas Disponibles</h1>
+                    </div>
+
+                    <!-- Alerta de respuesta del servidor -->
+                    <div class="alert d-none" id="serverResponse" role="alert"></div>
+
+                    <!-- Panel de Pencas Disponibles -->
+                    <div class="row" id="pencasGrid">
+                        <!-- Contenido poblado por JavaScript -->
+                    </div>
+
+                </div>
+                <!-- Fin del contenido de la página -->
+
+            </div>
+            <!-- Fin del contenido principal -->
+            <!-- Pie de página -->
+            <footer class="sticky-footer bg-white">
+                <div class="container my-auto">
+                    <div class="copyright text-center my-auto">
+                        <span>© TuPencaUy 2024</span>
+                    </div>
+                </div>
+            </footer>
+            <!-- Fin del pie de página -->
+
+        </div>
+        <!-- Fin del contenedor de contenido -->
+
+    </div>
+    <!-- Fin del contenedor de la página -->
+    <!-- Botón de desplazamiento hacia arriba -->
+    <a class="scroll-to-top rounded" href="#page-top">
+        <i class="fas fa-angle-up"></i>
+    </a>
+
+    <!-- Núcleo de JavaScript -->
+    <script src="../vendor/jquery/jquery.min.js"></script>
+    <script src="../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="../vendor/jquery-easing/jquery.easing.min.js"></script>
+    <script src="../js/api.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/5.0.11/signalr.min.js"></script>
+    <script>
+        // Crear la conexión
+        const connection = new signalR.HubConnectionBuilder()
+            .withUrl("/notificacionHub")
+            .build();
+
+        // Iniciar la conexión
+        connection.start().then(() => {
+            console.log("se hizo la conexión con SignalR")
+        }).catch(err => console.error(err.toString()));
+
+        // Función para recibir notificaciones
+        connection.on("RecibirNotificacion", (notificacion) => {
+            console.log("Notificación recibida: " + notificacion);
+            // Crear un nuevo elemento para la notificación
+            const notificationItem = document.createElement("a");
+            notificationItem.classList.add("dropdown-item", "d-flex", "align-items-center");
+            notificationItem.innerHTML = `
+        <div class="mr-3">
+            <div class="icon-circle bg-primary">
+                <i class="fas fa-file-alt text-white"></i>
+            </div>
+        </div>
+        <div>
+            <div class="small text-gray-500">Nueva Notificación</div>
+            <span class="font-weight-bold">${notificacion}</span>
+        </div>
+`;
+
+            // Añadir la notificación al listado
+            const notificationList = document.getElementById("notificationList");
+            notificationList.prepend(notificationItem);
+
+            // Actualizar el contador de notificaciones
+            const badge = document.getElementById("notificacionesBadge");
+            let count = parseInt(badge.textContent);
+            count += 1;
+            badge.textContent = count;
+            badge.classList.remove("d-none"); // Asegurarse de que el badge es visible
+        });
+
+
+        document.addEventListener('DOMContentLoaded', async function () {
+            verifySession();
+            loadSiteInfo();
+            await loadUserInfo();
+
+
+            // Obtener el tenantId y idUser del localStorage
+            const tenantId = localStorage.getItem('tenantId');
+            const idUser = localStorage.getItem('idUser');
+
+            // Verificar si el token, tenantId y idUser están presentes
+            if (!localStorage.getItem('token') || !tenantId || !idUser) {
+                window.location.href = 'sitios.html';
+                return;
+            }
+
+            // Llamada a la API para obtener las pencas disponibles
+            fetch(`http://localhost:5234/api/Sitios/${tenantId}/Pencas?idUser=${idUser}`, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Bearer ' + localStorage.getItem('token')
+                }
+            })
+                .then(response => response.json())
+                .then(data => {
+                    // Obtener el contenedor de la lista de pencas
+                    const pencasGrid = document.getElementById('pencasGrid');
+
+                    // Iterar sobre las pencas abiertas y crear las tarjetas
+                    data.forEach(function (penca) {
+                        const buttonLabel = penca.inscrito ? 'Entrar' : 'Inscribirse';
+                        const buttonClass = penca.inscrito ? 'btn-info' : 'btn-success';
+                        const buttonAction = penca.inscrito ? `location.href='user-dashboard.html?pencaId=${penca.id}'` : `inscribirseEnPenca('${penca.id}')`;
+
+                        const costoPenca = penca.costoPenca ? penca.costoPenca.toFixed(2) : '0.00';
+
+                        const pencaCard = `
+                                            <div class="col-lg-4 mb-4">
+                                                <div class="card shadow h-100 py-2">
+                                                    <div class="card-body">
+                                                        <div class="text-center">
+                                                            <h5 class="card-title">${penca.nombre}</h5>
+                                                            <p class="card-text">Costo: $${costoPenca}</p>
+                                                            <button class="btn ${buttonClass}" id="btn-${penca.id}" onclick="${buttonAction}">${buttonLabel}</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        `;
+                        pencasGrid.insertAdjacentHTML('beforeend', pencaCard);
+                    });
+                })
+                .catch(error => console.error('Error al obtener las pencas:', error));
+        });
+
+        function inscribirseEnPenca(pencaId) {
+            const tenantId = localStorage.getItem('tenantId');
+            const idUser = localStorage.getItem('idUser');
+
+            console.log('Enviando datos de inscripción:', {
+                IdPenca: pencaId,
+                IdUsuario: idUser,
+                TenantId: tenantId
+            });
+
+            // Llamada a la API para inscribirse en la penca
+            fetch('http://localhost:5234/api/Pencas/Inscribirse', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Bearer ' + localStorage.getItem('token')
+                },
+                body: JSON.stringify({ IdPenca: pencaId, IdUsuario: idUser, TenantId: tenantId })
+            })
+                .then(response => {
+                    console.log('Respuesta del servidor:', response);
+
+                    const alertBox = document.getElementById('serverResponse');
+                    alertBox.classList.remove('d-none', 'alert-success', 'alert-danger', 'alert-warning');
+
+                    if (response.ok) {
+                        alertBox.classList.add('alert-success');
+                        alertBox.textContent = 'Inscripción exitosa';
+                    } else if (response.status === 400) {
+                        alertBox.classList.add('alert-warning');
+                        alertBox.textContent = 'Solicitud incorrecta (400)';
+                    } else if (response.status === 404) {
+                        alertBox.classList.add('alert-warning');
+                        alertBox.textContent = 'Recurso no encontrado (404)';
+                    } else if (response.status === 500) {
+                        alertBox.classList.add('alert-danger');
+                        alertBox.textContent = 'Error del servidor (500)';
+                    } else {
+                        alertBox.classList.add('alert-danger');
+                        alertBox.textContent = 'Error desconocido';
+                    }
+
+                    alertBox.style.display = 'block';
+                    return response.json();
+                })
+                .then(data => {
+                    console.log('Datos de respuesta:', data);
+                    if (data) {
+                        // Actualizar el estado del botón
+                        const button = document.getElementById(`btn-${pencaId}`);
+                        button.className = 'btn btn-info';
+                        button.textContent = 'Entrar';
+                        button.onclick = function () {
+                            location.href = `user-dashboard.html?pencaId=${pencaId}`;
+                        };
+                    }
+                })
+                .catch(error => {
+                    console.error('Error en la inscripción:', error);
+                    const alertBox = document.getElementById('serverResponse');
+                    alertBox.classList.remove('d-none', 'alert-success', 'alert-danger', 'alert-warning');
+                    alertBox.classList.add('alert-danger');
+                    alertBox.textContent = 'Error al inscribirse en la penca: No tienes saldo suficiente';
+                    alertBox.style.display = 'block';
+                });
+        }
+
+    </script>
+</body>
+
+</html>

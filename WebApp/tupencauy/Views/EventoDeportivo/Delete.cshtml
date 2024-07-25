@@ -1,0 +1,27 @@
+﻿@model EventoDeportivo
+
+@{
+    ViewData["Title"] = "Delete";
+}
+
+<h1>Borrar</h1>
+
+<h3>¿Estás seguro de que quieres eliminar este evento deportivo?</h3>
+<div>
+    <h4>EventoDeportivo</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Nombre)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Nombre)
+        </dd>
+    </dl>
+    
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="Id" />
+        <input type="submit" value="Borrar" class="btn btn-danger" /> |
+        <a asp-controller="SuperAdmin" asp-action="EventosDeportivos">Volver a la lista de eventos deportivos</a>
+    </form>
+</div>

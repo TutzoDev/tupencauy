@@ -1,0 +1,102 @@
+﻿@model tupencauy.ViewModels.SistemaVM
+
+@{
+    ViewData["Title"] = "Parámetros del sistema";
+    var antiforgeryToken = ViewData["AntiforgeryToken"] as string;
+}
+<h1>Parámetros del sistema</h1>
+
+<hr />
+<div class="row">
+    <div class="col-md-6">
+        <form asp-controller="SuperAdmin" asp-action="ActualizarComision">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <div class="form-group">
+                <label asp-for="Comision" class="control-label"></label>
+                <input asp-for="Comision" class="form-control" />
+                <span asp-validation-for="Comision" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Billetera" class="control-label"></label>
+                <input asp-for="Billetera" class="form-control" readonly />
+            </div>
+
+            <div class="form-group">
+                <input type="submit" value="Actualizar Comisión" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+
+    <div class="col-md-6" style="overflow-y: auto; max-height: 500px;">
+        <label class="control-label">Cantidad de usuarios por sitio:</label>
+        <div class="list-group">
+            @foreach (var sitio in Model.sitios)
+            {
+                <div class="list-group-item sitio-card" data-id="@sitio.Id">
+                    <div class="d-flex w-100 justify-content-between">
+                        <h5 class="mb-1">@sitio.Nombre</h5>
+                    </div>
+                    <div class="mb-1">
+                        <button type="button" class="btn btn-secondary btn-sm" onclick="updateUsuarios('@sitio.Id', -1)">-</button>
+                        <span id="cantidad-usuarios-@sitio.Id">@sitio.cantidadUsuarios</span>
+                        <button type="button" class="btn btn-secondary btn-sm" onclick="updateUsuarios('@sitio.Id', 1)">+</button>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+<div>
+    <a asp-controller="SuperAdmin" asp-action="Index">Volver al inicio</a>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        var antiforgeryToken = '@antiforgeryToken';
+
+        function updateUsuarios(sitioId, change) {
+            var cantidadElement = document.getElementById('cantidad-usuarios-' + sitioId);
+            var currentCantidad = parseInt(cantidadElement.textContent);
+            var newCantidad = currentCantidad + change;
+            if (newCantidad >= 0) {
+                cantidadElement.textContent = newCantidad;
+                console.log('sitioId:', sitioId);
+
+                // Realizar una llamada AJAX para actualizar la cantidad en el servidor
+                fetch('/SuperAdmin/UpdateCantidadUsuarios', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'RequestVerificationToken': antiforgeryToken
+                    },
+                    body: JSON.stringify({ sitioId: sitioId, newCantidad: newCantidad })
+                }).then(response => {
+                    if (!response.ok) {
+                        throw new Error('Error al actualizar la cantidad de usuarios por sitio');
+                    }
+                    console.log('Cantidad actualizada correctamente');
+                }).catch(error => {
+                    console.error('Error:', error);
+                });
+            }
+        }
+
+        // Asignar la función de actualización a los botones
+        document.querySelectorAll('.btn-secondary').forEach(button => {
+            button.addEventListener('click', function () {
+                var sitioId = this.closest('.sitio-card').dataset.id;
+                var change = this.textContent === '+' ? 1 : -1;
+                updateUsuarios(sitioId, change);
+            });
+        });
+    });
+</script>
+<style>
+    .sitio-card {
+        cursor: pointer;
+        margin-bottom: 10px;
+    }
+</style>

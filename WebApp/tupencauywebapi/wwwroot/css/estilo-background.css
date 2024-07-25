@@ -1,0 +1,61 @@
+body {
+    background-image: url('../images/fondoSitios.webp'); /* Ruta de la imagen */
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: 20px;
+    padding: 20px;
+    width: 90%;
+    max-width: 600px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.card {
+    margin: 1px;
+}
+
+.btn-primary {
+    background-color: #4e73df;
+    border-color: #4e73df;
+}
+
+.main-container {
+    background: rgba(255, 255, 255, 0.9);
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+    max-width: 900px;
+    margin: 20px auto;
+}
+
+.custom-title {
+    color: #ff5733;
+}
+
+
+/* Haz el contenedor del grid invisible */
+.invisible-background {
+    background: transparent !important; /* Haz el fondo transparente */
+    border: none !important; /* Elimina cualquier borde */
+    box-shadow: none !important; /* Elimina cualquier sombra */
+    padding: 0 !important; /* Ajusta el padding según sea necesario */
+    margin: 0 !important; /* Ajusta el margen según sea necesario */
+}
+
+/* Resaltar el mensaje de bienvenida */
+.highlight {
+    font-size: 2rem;
+    color: #B026FF ActiveBorder; /* Puedes ajustar el color a tu preferencia */
+    font-weight: bold;
+    text-shadow: 2px 2px #ddd; /* Añade un poco de sombra para resaltar */
+}

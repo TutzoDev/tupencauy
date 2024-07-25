@@ -1,0 +1,44 @@
+﻿@model IEnumerable<tupencauy.ViewModels.EventoDeportivoVM>
+
+@{
+    ViewData["Title"] = "Eventos Deportivos";
+}
+
+<h1>Eventos deportivos</h1>
+
+<p>
+    <a asp-action="Create" asp-controller="EventoDeportivo">Crear Nuevo</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Nombre)
+            </th>
+            <th>
+                 <p>Partido</p>
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Nombre)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.EquipoUno)
+                    -
+                    @Html.DisplayFor(modelItem => item.EquipoDos)
+                </td>
+                <td>
+                    <a asp-controller="EventoDeportivo" asp-action="Edit" asp-route-id="@item.Id">Editar</a> |
+                    <a asp-controller="EventoDeportivo" asp-action="Details" asp-route-id="@item.Id">Detalles</a> |
+                    <a asp-controller="EventoDeportivo" asp-action="Delete" asp-route-id="@item.Id">Borrar</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

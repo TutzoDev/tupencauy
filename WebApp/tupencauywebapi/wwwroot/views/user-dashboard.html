@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Dashboard - TuPenca UY</title>
+    <link href="../vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <link href="../css/sb-admin-2.min.css" rel="stylesheet">
+    <link href="../css/styles.css" rel="stylesheet">
+    <link href="../css/user-dashboard.css" rel="stylesheet">
+    <style id="dynamic-styles"></style>
+    <style>
+        .chat-container.hidden {
+            display: none;
+        }
+
+        .chat-minimized {
+            position: fixed;
+            bottom: 0;
+            right: 0;
+            background-color: #007bff;
+            color: white;
+            padding: 10px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body id="page-top">
+
+    <!-- Contenedor de la página -->
+    <div id="wrapper">
+        <!-- Barra lateral -->
+        <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+
+            <!-- Barra lateral - Marca -->
+            <div class="sidebar-brand d-flex align-items-center justify-content-center">
+                <div class="sidebar-brand-icon">
+                    <img src="../images/logo.png" alt="Logo" style="width: 40px; height: 40px;">
+                </div>
+                <div class="sidebar-brand-text mx-3" id="siteName">TuPenca UY</div>
+            </div>
+
+            <!-- Divisor -->
+            <hr class="sidebar-divider my-0">
+
+            <!-- Opción de menú - Pencas disponibles -->
+            <li class="nav-item">
+                <a class="nav-link" href="pencas-disponibles.html">
+                    <i class="fas fa-fw fa-list"></i>
+                    <span>Pencas disponibles</span>
+                </a>
+            </li>
+
+            <!-- Opción de menú - Tabla de posiciones Pencas -->
+            <li class="nav-item">
+                <a class="nav-link" href="historial-apuestas.html">
+                    <i class="fas fa-fw fa-trophy"></i>
+                    <span>Tabla de posiciones Pencas</span>
+                </a>
+            </li>
+
+            <!-- Opción de menú - Ajustes del perfil -->
+            <li class="nav-item">
+                <a class="nav-link" href="ajustes-perfil.html">
+                    <i class="fas fa-fw fa-user"></i>
+                    <span>Ajustes del perfil</span>
+                </a>
+            </li>
+
+            <!-- Divisor -->
+            <hr class="sidebar-divider">
+
+            <!-- Alternador de la barra lateral -->
+            <div class="text-center d-none d-md-inline">
+                <button class="rounded-circle border-0" id="sidebarToggle"></button>
+            </div>
+
+            <!-- Opción de menú - Volver a todos los sitios -->
+            <li class="nav-item">
+                <a class="nav-link" href="sitios.html" onclick="logoutAndRedirect()">
+                    <i class="fas fa-fw fa-sign-out-alt"></i>
+                    <span>Volver a todos los sitios</span>
+                </a>
+            </li>
+
+        </ul>
+        <!-- Fin de la barra lateral -->
+        <!-- Contenedor de contenido -->
+        <div id="content-wrapper" class="d-flex flex-column">
+
+            <!-- Contenido principal -->
+            <div id="content">
+
+                <!-- Barra superior -->
+                <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+                    <ul class="navbar-nav ml-auto">
+                        <li class="nav-item dropdown no-arrow d-sm-none">
+                            <a class="nav-link dropdown-toggle" href="#" id="searchDropdown" role="button"
+                               data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i class="fas fa-search fa-fw"></i>
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-right p-3 shadow animated--grow-in"
+                                 aria-labelledby="searchDropdown">
+                                <form class="form-inline mr-auto w-100 navbar-search">
+                                    <div class="input-group">
+                                        <input type="text" class="form-control bg-light border-0 small"
+                                               placeholder="Search for..." aria-label="Search"
+                                               aria-describedby="basic-addon2">
+                                        <div class="input-group-append">
+                                            <button class="btn btn-primary" type="button">
+                                                <i class="fas fa-search fa-sm"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </li>
+
+                        <!-- Información del usuario -->
+                        <li class="nav-item dropdown no-arrow">
+                            <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
+                               data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <span class="mr-2 d-none d-lg-inline text-gray-600 small" id="userName">Usuario</span>
+                                <img class="img-profile rounded-circle" id="userProfileImage" src="">
+                            </a>
+                            <!-- Dropdown - Información del usuario -->
+                            <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
+                                 aria-labelledby="userDropdown">
+                                <a class="dropdown-item" href="ajustes-perfil.html">
+                                    <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
+                                    Perfil
+                                </a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="sitios.html" onclick="logoutAndRedirect()">
+                                    <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+                                    Cerrar sesión
+                                </a>
+                            </div>
+                        </li>
+
+                        <!-- Saldo disponible -->
+                        <li class="nav-item dropdown no-arrow mx-1">
+                            <div class="nav-link">
+                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">Saldo disponible: $<span id="saldoDisponible">0.00</span></span>
+                            </div>
+                        </li>
+
+                    </ul>
+                </nav>
+                <!-- Fin de la barra superior -->
+                <!-- Inicio del contenido de la página -->
+                <div class="container-fluid">
+
+                    <!-- Título de la Penca -->
+                    <div class="penca-title">
+                        <h1 class="h3 mb-2 text-gray-800" id="pencaNombre">Nombre de la Penca</h1>
+                    </div>
+
+                    <!-- Tabla de posiciones -->
+                    <div class="positions-table-panel">
+                        <h1 class="h3 mb-2 text-gray-800">Tabla de posiciones</h1>
+                        <div class="card shadow mb-4">
+                            <div class="card-body">
+                                <div id="positionsTable">
+                                    <table class="table table-striped">
+                                        <thead>
+                                            <tr>
+                                                <th>Posición</th>
+                                                <th>Usuario</th>
+                                                <th>Puntaje</th>
+                                                <th>Aciertos</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="positionsTableBody">
+                                            <!-- Contenido poblado por JavaScript -->
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Eventos deportivos -->
+                    <div class="sports-events-panel">
+                        <h1 class="h3 mb-2 text-gray-800">Eventos Deportivos</h1>
+                        <div class="card shadow mb-4">
+                            <div class="card-body">
+                                <div id="eventsTable">
+                                    <!-- Tabla de eventos deportivos -->
+                                    <table class="table table-striped">
+                                        <thead>
+                                            <tr>
+                                                <th>Nombre</th>
+                                                <th>Deporte</th>
+                                                <th>Equipo 1</th>
+                                                <th>Equipo 2</th>
+                                                <th>Score 1</th>
+                                                <th>Score 2</th>
+                                                <th>Fecha Inicio</th>
+                                                <th>Fecha Fin</th>
+                                                <th></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="eventsTableBody">
+                                            <!-- Contenido poblado por JavaScript -->
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Ajustes de Notificaciones -->
+                    <div class="notifications-panel">
+                        <h1 class="h3 mb-2 text-gray-800">Ajustes de Notificaciones</h1>
+                        <div class="card shadow mb-4">
+                            <div class="card-body">
+                                <form id="notificationsForm">
+                                    <div class="form-group">
+                                        <label for="notif1">Notificación 1</label>
+                                        <input type="range" class="custom-range" id="notif1" min="0" max="1" step="1">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="notif2">Notificación 2</label>
+                                        <input type="range" class="custom-range" id="notif2" min="0" max="1" step="1">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="notif3">Notificación 3</label>
+                                        <input type="range" class="custom-range" id="notif3" min="0" max="1" step="1">
+                                    </div>
+                                    <button type="submit" class="btn btn-primary mt-3">Guardar cambios</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <!-- Fin del contenido de la página -->
+
+            </div>
+            <!-- Fin del contenido principal -->
+            <!-- Pie de página -->
+            <footer class="sticky-footer bg-white">
+                <div class="container my-auto">
+                    <div class="copyright text-center my-auto">
+                        <span>TuPenca UY &copy; 2024</span>
+                    </div>
+                </div>
+            </footer>
+            <!-- Fin del pie de página -->
+        </div>
+        <!-- Fin del contenedor de contenido -->
+
+    </div>
+    <!-- Fin del contenedor de la página -->
+    <!-- Contenedor de chat -->
+    <div class="chat-container" id="chatContainer">
+        <div class="chat-header">
+            <span>Chat</span>
+            <button onclick="toggleChat()">_</button>
+        </div>
+        <div class="chat-messages" id="messagesList"></div>
+        <div class="chat-input">
+            <div>
+                <input type="text" id="messageInput" placeholder="Escribe un mensaje...">
+            </div>
+            <button onclick="sendMessage()">Enviar</button>
+        </div>
+    </div>
+    <div class="chat-minimized" id="chatMinimized" onclick="toggleChat()">Chat</div>
+
+    <!-- Modal para hacer predicciones -->
+    <div class="modal fade" id="predictionModal" tabindex="-1" role="dialog" aria-labelledby="predictionModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="predictionModalLabel">Hacer Predicción</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div id="predictionMessage" class="alert alert-warning d-none">No has hecho ninguna predicción para este evento</div>
+                    <div class="form-group">
+                        <label for="teamOneName">Equipo 1</label>
+                        <input type="text" class="form-control" id="teamOneName" readonly>
+                    </div>
+                    <div class="form-group">
+                        <label for="teamTwoName">Equipo 2</label>
+                        <input type="text" class="form-control" id="teamTwoName" readonly>
+                    </div>
+                    <div class="form-group">
+                        <label for="scoreTeamOne">Score Equipo 1</label>
+                        <input type="number" class="form-control" id="scoreTeamOne">
+                    </div>
+                    <div class="form-group">
+                        <label for="scoreTeamTwo">Score Equipo 2</label>
+                        <input type="number" class="form-control" id="scoreTeamTwo">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                    <button type="button" class="btn btn-primary" id="confirmPrediction">Confirmar Predicción</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="../vendor/jquery/jquery.min.js"></script>
+    <script src="../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="../vendor/jquery-easing/jquery.easing.min.js"></script>
+    <script src="../js/api.js"></script>
+    <script src="../js/scripts.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/5.0.11/signalr.min.js"></script>
+
+    <!-- Scripts personalizados de esta página-->
+    <script>
+        let userNameGlobal = '';
+        let realizada = false; // Variable para verificar si la predicción ya fue realizada
+        let idPencaSitioUsuario = '';
+        let idEvento = '';
+
+        const connection = new signalR.HubConnectionBuilder()
+            .withUrl("http://localhost:5234/chatHub") // Asegúrate de que la URL sea correcta
+            .build();
+
+        connection.on("ReceiveMessage", (user, message) => {
+            const msg = document.createElement('div');
+            msg.classList.add('message');
+            msg.innerHTML = `<strong>${user}</strong>: ${message}`;
+            document.getElementById('messagesList').appendChild(msg);
+        });
+
+        connection.start().catch(err => console.error(err.toString()));
+
+        function sendMessage() {
+            const user = userNameGlobal; // Obtener el nombre del usuario desde la variable global
+            const message = document.getElementById('messageInput').value;
+
+            // Envía el mensaje al servidor SignalR para que lo distribuya
+            connection.invoke("SendMessage", user, message).catch(err => console.error(err.toString()));
+
+            // Limpiar el campo de mensaje después de enviarlo
+            document.getElementById('messageInput').value = '';
+        }
+
+        function toggleChat() {
+            const chatContainer = document.getElementById('chatContainer');
+            const chatMinimized = document.getElementById('chatMinimized');
+            const isHidden = chatContainer.classList.toggle('hidden');
+            chatMinimized.style.display = isHidden ? 'block' : 'none';
+        }
+
+        document.addEventListener('DOMContentLoaded', async function () {
+            verifySession();
+            loadSiteInfo();
+            await loadUserInfo();
+
+            // Obtener el tenantId y idUser del localStorage
+            const tenantId = localStorage.getItem('tenantId');
+            const idUser = localStorage.getItem('idUser');
+
+            // Verificar si el token, tenantId y idUser están presentes
+            if (!localStorage.getItem('token') || !tenantId || !idUser) {
+                window.location.href = 'sitios.html';
+                return;
+            }
+
+            // Asignar imagen de perfil aleatoria
+            const profileImageIndex = Math.floor(Math.random() * 5) + 1;
+            document.getElementById('userProfileImage').src = `../images/profiles/profile${profileImageIndex}.png`;
+
+            // Establecer userNameGlobal
+            userNameGlobal = document.getElementById('userName').textContent;
+
+            // Función para abrir el modal de predicción
+            window.openPredictionModal = function (eventId, equipoUno, equipoDos) {
+                const tenantId = localStorage.getItem('tenantId');
+                const userId = localStorage.getItem('idUser');
+                const pencaId = new URLSearchParams(window.location.search).get('pencaId');
+
+                fetch('http://localhost:5234/api/EventosDeportivos/GetPrediccionUser', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': 'Bearer ' + localStorage.getItem('token')
+                    },
+                    body: JSON.stringify({
+                        tenantId,
+                        userId,
+                        pencaId,
+                        IdEvento: eventId
+                    })
+                })
+                    .then(response => response.json())
+                    .then(data => {
+                        idPencaSitioUsuario = data.idPencaSitioUsuario;
+                        idEvento = data.idEvento;
+                        realizada = data.realizada;
+
+                        document.getElementById('teamOneName').value = data.equipoUno;
+                        document.getElementById('teamTwoName').value = data.equipoDos;
+                        document.getElementById('scoreTeamOne').value = data.scoreTeamUno;
+                        document.getElementById('scoreTeamTwo').value = data.scoreTeamDos;
+
+                        const predictionMessage = document.getElementById('predictionMessage');
+                        if (realizada) {
+                            predictionMessage.classList.add('d-none');
+                        } else {
+                            predictionMessage.classList.remove('d-none');
+                        }
+
+                        $('#predictionModal').modal('show');
+                    })
+                    .catch(error => console.error('Error al obtener la predicción:', error));
+            };
+
+            // Manejo del botón de confirmar predicción
+            document.getElementById('confirmPrediction').addEventListener('click', function () {
+                const url = realizada ? 'http://localhost:5234/api/EventosDeportivos/EditarPrediccion' : 'http://localhost:5234/api/EventosDeportivos/Predecir';
+
+                fetch(url, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': 'Bearer ' + localStorage.getItem('token')
+                    },
+                    body: JSON.stringify({
+                        IdPencaSitioUsuario: idPencaSitioUsuario,
+                        IdEvento: idEvento,
+                        ScoreTeamUno: document.getElementById('scoreTeamOne').value,
+                        ScoreTeamDos: document.getElementById('scoreTeamTwo').value
+                    })
+                })
+                    .then(response => {
+                        if (response.ok) {
+                            alert('La predicción se ha cargado correctamente en el sistema');
+                            $('#predictionModal').modal('hide');
+                        } else {
+                            return response.json().then(data => {
+                                alert('Error al enviar la predicción: ' + JSON.stringify(data));
+                            });
+                        }
+                    })
+                    .catch(error => console.error('Error al enviar la predicción:', error));
+            });
+
+            // Obtener eventos deportivos y mostrar tabla
+            const urlParams = new URLSearchParams(window.location.search);
+            const pencaId = urlParams.get('pencaId');
+
+            if (pencaId) {
+                // Obtener el nombre de la Penca
+                fetch(`http://localhost:5234/api/Pencas/${pencaId}`, {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': 'Bearer ' + localStorage.getItem('token')
+                    }
+                })
+                    .then(response => response.json())
+                    .then(data => {
+                        document.getElementById('pencaNombre').textContent = data.nombre;
+                    })
+                    .catch(error => console.error('Error al obtener el nombre de la Penca:', error));
+
+                // Obtener eventos deportivos
+                fetch(`http://localhost:5234/api/Pencas/${pencaId}/GetEventosUnoVsUno`, {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': 'Bearer ' + localStorage.getItem('token')
+                    }
+                })
+                    .then(response => response.json())
+                    .then(data => {
+                        const eventsTableBody = document.getElementById('eventsTableBody');
+                        data.forEach(event => {
+                            const row = document.createElement('tr');
+
+                            row.innerHTML = `
+                                                        <td>${event.nombre}</td>
+                                                        <td>${event.deporte}</td>
+                                                        <td>${event.equipoUno}</td>
+                                                        <td>${event.equipoDos}</td>
+                                                        <td>${event.scoreUno}</td>
+                                                        <td>${event.scoreDos}</td>
+                                                        <td>${new Date(event.fechaInicio).toLocaleString()}</td>
+                                                        <td>${new Date(event.fechaFin).toLocaleString()}</td>
+                                                        <td><button class="btn btn-primary" onclick="openPredictionModal('${event.id}', '${event.equipoUno}', '${event.equipoDos}')">Ver Predicción</button></td>
+                                                    `;
+                            eventsTableBody.appendChild(row);
+                        });
+                    })
+                    .catch(error => console.error('Error al obtener los eventos:', error));
+
+                // Obtener tabla de posiciones
+                fetch(`http://localhost:5234/api/Pencas/Sitio/${tenantId}/Penca/${pencaId}/GetUsuarios`, {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': 'Bearer ' + localStorage.getItem('token')
+                    }
+                })
+                    .then(response => response.json())
+                    .then(data => {
+                        const positionsTableBody = document.getElementById('positionsTableBody');
+                        data.sort((a, b) => b.puntaje - a.puntaje || b.aciertos - a.aciertos);
+
+                        data.forEach((user, index) => {
+                            const row = document.createElement('tr');
+                            row.innerHTML = `
+                                                        <td>${index + 1}</td>
+                                                        <td>${user.nombreUsuario}</td>
+                                                        <td>${user.puntaje}</td>
+                                                        <td>${user.aciertos}</td>
+                                                    `;
+                            positionsTableBody.appendChild(row);
+                        });
+                    })
+                    .catch(error => console.error('Error al obtener la tabla de posiciones:', error));
+            }
+        });
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bienvenido a Tu Penca UY</title>
+
+    <!-- Fuente personalizada para esta plantilla -->
+    <link href="../vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Nunito:200,300,400,600,700,800,900" rel="stylesheet">
+
+    <!-- Estilos personalizados para esta plantilla -->
+    <link href="../css/sb-admin-2.min.css" rel="stylesheet">
+    <link href="../css/styles.css" rel="stylesheet">
+    <link href="../css/estilo-background.css" rel="stylesheet">
+</head>
+<body id="page-top">
+
+    <!-- Contenedor de Contenido -->
+    <div id="content-wrapper" class="d-flex flex-column align-items-center justify-content-center">
+
+        <!-- Contenido Principal -->
+        <div id="content" class="d-flex flex-column align-items-center justify-content-center">
+
+            <!-- Inicio del Contenido de la Página -->
+            <div class="container-fluid main-container invisible-background">
+
+                <!-- Encabezado de la Página -->
+                <div class="d-sm-flex align-items-center justify-content-center mb-4">
+                    <h1 class="h1 mb-0 text-center custom-title highlight">Bienvenido a Tu Penca UY</h1>
+                </div>
+
+                <!-- Lista de Sitios -->
+                <div class="row justify-content-center" id="site-list">
+                    <!-- El contenido dinámico se insertará aquí -->
+                </div>
+
+            </div>
+            <!-- Fin del Contenido de la Página -->
+
+        </div>
+        <!-- Fin del Contenido Principal -->
+
+    </div>
+    <!-- Fin del Contenedor de Contenido -->
+    <!-- Núcleo de JavaScript -->
+    <script src="../vendor/jquery/jquery.min.js"></script>
+    <script src="../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="../vendor/jquery-easing/jquery.easing.min.js"></script>
+    <script src="../js/sb-admin-2.min.js"></script>
+    <script src="../js/scripts.js"></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // Llamada a la API para obtener los sitios
+            fetch('http://localhost:5234/api/Sitios', {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                }
+            })
+                .then(response => response.json())
+                .then(data => {
+                    // Filtrar los sitios con status = true
+                    var sitiosActivos = data.filter(sitio => sitio.status === true);
+
+                    // Obtener el contenedor de la lista de sitios
+                    var contenedorListaSitios = document.getElementById('site-list');
+
+                    // Iterar sobre los sitios activos y crear las tarjetas
+                    sitiosActivos.forEach(function (sitio) {
+                        var tarjetaSitio = `
+                                <div class="col-lg-4 col-md-6 mb-4">
+                                    <div class="card shadow h-100 py-2">
+                                        <div class="card-body">
+                                            <div class="text-center">
+                                                <h5 class="card-title">${sitio.nombre}</h5>
+                                                <p class="card-text">${sitio.url}</p>
+                                                <p class="card-text">Tipo de Registro: ${sitio.tipoRegistro}</p>
+                                                <a href="#" class="btn btn-primary" onclick="seleccionarSitio('${sitio.tenantId}')">Acceder</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            `;
+                        contenedorListaSitios.insertAdjacentHTML('beforeend', tarjetaSitio);
+                    });
+                })
+                .catch(error => console.error('Error al obtener los sitios:', error));
+
+            // Función para seleccionar un sitio y almacenar el tenantId
+            window.seleccionarSitio = function (tenantId) {
+                localStorage.setItem('tenantId', tenantId);
+                // Redirigir al usuario a la página de login
+                window.location.href = 'login.html';
+            };
+        });
+    </script>
+
+</body>
+</html>

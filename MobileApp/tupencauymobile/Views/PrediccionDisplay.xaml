@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewmodel="clr-namespace:tupencauymobile.ViewModels"
+             x:Class="tupencauymobile.Views.PrediccionDisplay"
+             x:DataType="viewmodel:PrediccionVM"
+             BackgroundColor="Transparent">
+
+    <AbsoluteLayout HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand">
+        <Grid>
+            <Frame BackgroundColor="White"
+                   VerticalOptions="Center"
+                   HorizontalOptions="Center"
+                   HeightRequest="260"
+                   WidthRequest="320"
+                   CornerRadius="20"
+                   Padding="20">
+                <Grid VerticalOptions="Start">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+
+                    <!-- Equipo Uno -->
+                    <Label Text="{Binding EquipoUno}" Grid.Row="0" Grid.ColumnSpan="3" HorizontalOptions="Start" VerticalOptions="End" FontSize="Large" FontAttributes="Bold" Margin="0,0,0,10"/>
+                    <Entry x:Name="GolesEquipoUno" Text="{Binding ScoreUno}" FontSize="23" Placeholder="Goles" Keyboard="Numeric" MaxLength="1" Grid.Row="1" Grid.Column="0" HorizontalOptions="Center" VerticalOptions="Center" HorizontalTextAlignment="Center" WidthRequest="110"/>
+
+                    <!-- Equipo Dos -->
+                    <Label Text="{Binding EquipoDos}" Grid.Row="2" Grid.ColumnSpan="3" HorizontalOptions="End" VerticalOptions="Start" FontSize="Large" FontAttributes="Bold" Margin="0,10,0,40"/>
+                    <Entry x:Name="GolesEquipoDos" Text="{Binding ScoreDos}" FontSize="23" Placeholder="Goles" Keyboard="Numeric" MaxLength="1" Grid.Row="1" Grid.Column="2" HorizontalOptions="Center" VerticalOptions="Center" HorizontalTextAlignment="Center" WidthRequest="110"/>
+
+                    <!-- Espacio en medio -->
+                    <Label Text="VS" Grid.Row="1" Grid.Column="1" HorizontalOptions="Center" VerticalOptions="Center" FontSize="Large" FontAttributes="Bold" TextColor="Black"/>
+
+                    <Button Text="Guardar"
+                            Clicked="GuardarPrediccion"
+                            CommandParameter="{Binding IdEvento}"
+                            BackgroundColor="Purple"
+                            WidthRequest="120"
+                            IsVisible="{Binding NoRealizada}"
+                            HeightRequest="50"
+                            Grid.Row="3"
+                            Grid.Column="0"/>
+
+                    <!--Se muestra si ya se hizo la prediccion al menos una vez-->
+                    <Button Text="Editar"
+                            Clicked="EditarPrediccion"
+                            CommandParameter="{Binding IdEvento}"
+                            BackgroundColor="Purple"
+                            WidthRequest="120"
+                            IsVisible="{Binding Realizada}"
+                            HeightRequest="50"
+                            Grid.Row="3"
+                            Grid.Column="0"/>
+
+                    <Button Text="Cerrar"
+                            Clicked="CloseModal"
+                            BackgroundColor="Purple"
+                            WidthRequest="120"
+                            HeightRequest="50"
+                            Grid.Row="3"
+                            Grid.Column="2"/>
+                </Grid>
+            </Frame>
+        </Grid>
+
+        <ActivityIndicator IsVisible="{Binding Ocupado}"
+                           IsRunning="{Binding Ocupado}"
+                           HorizontalOptions="FillAndExpand"
+                           VerticalOptions="CenterAndExpand"/>
+    </AbsoluteLayout>
+</ContentPage>

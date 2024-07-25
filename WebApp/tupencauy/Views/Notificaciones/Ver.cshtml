@@ -1,0 +1,16 @@
+﻿@model tupencauy.ViewModels.NotificacionViewModel
+
+@{
+    ViewData["Title"] = "Ver Notificación";
+}
+
+<h1>Notificación</h1>
+
+<div>
+    <h2>@Model.Mensaje</h2>
+    <p>Fecha de creación: @Model.FechaCreacion</p>
+    <p>Fecha de envío: @Model.FechaEnvio</p>
+    <p>Leída: @(Model.Leida ? "Sí" : "No")</p>
+</div>
+
+<a href="@Url.Action("Index", "Home")" class="btn btn-primary">Volver</a>

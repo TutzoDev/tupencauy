@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - Pencas Deportivas</title>
+
+    <!-- Fuentes personalizadas para esta plantilla -->
+    <link href="../vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Nunito:200,300,400,600,700,800,900" rel="stylesheet">
+
+    <!-- Estilos personalizados para esta plantilla -->
+    <link href="../css/sb-admin-2.min.css" rel="stylesheet">
+    <link href="../css/styles.css" rel="stylesheet">
+</head>
+
+<body id="page-top">
+
+    <!-- Contenedor de la página -->
+    <div id="wrapper">
+
+        <!-- Barra de navegación lateral -->
+        <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+
+            <!-- Marca de la barra lateral -->
+            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="admin-dashboard.html">
+                <div class="sidebar-brand-icon rotate-n-15">
+                    <i class="fas fa-laugh-wink"></i>
+                </div>
+                <div class="sidebar-brand-text mx-3">Admin</div>
+            </a>
+
+            <!-- Separador -->
+            <hr class="sidebar-divider my-0">
+
+            <!-- Elemento de navegación - Inicio -->
+            <li class="nav-item active">
+                <a class="nav-link" href="admin-dashboard.html">
+                    <i class="fas fa-fw fa-tachometer-alt"></i>
+                    <span>Inicio</span>
+                </a>
+            </li>
+
+            <!-- Separador -->
+            <hr class="sidebar-divider">
+
+            <!-- Elemento de navegación - Administrar Pencas -->
+            <li class="nav-item">
+                <a class="nav-link" href="#" data-toggle="modal" data-target="#modalAdministrarPencas">
+                    <i class="fas fa-fw fa-list"></i>
+                    <span>Administrar Pencas</span>
+                </a>
+            </li>
+
+            <!-- Elemento de navegación - Administrar Registros -->
+            <li class="nav-item">
+                <a class="nav-link" href="#" data-toggle="modal" data-target="#modalAdministrarRegistros">
+                    <i class="fas fa-fw fa-user-check"></i>
+                    <span id="adminRegistrosText">Administrar Registros</span>
+                </a>
+            </li>
+
+            <!-- Elemento de navegación - Administrar Recordatorios -->
+            <li class="nav-item">
+                <a class="nav-link" href="#" data-toggle="modal" data-target="#modalAdministrarRecordatorios">
+                    <i class="fas fa-fw fa-bell"></i>
+                    <span>Administrar Recordatorios</span>
+                </a>
+            </li>
+
+            <!-- Elemento de navegación - Administrar Premios -->
+            <li class="nav-item">
+                <a class="nav-link" href="#" data-toggle="modal" data-target="#modalAdministrarPremios">
+                    <i class="fas fa-fw fa-trophy"></i>
+                    <span>Administrar Premios</span>
+                </a>
+            </li>
+
+            <!-- Elemento de navegación - Personalizar Sitio -->
+            <li class="nav-item">
+                <a class="nav-link" href="#" data-toggle="modal" data-target="#modalPersonalizarSitio">
+                    <i class="fas fa-fw fa-cogs"></i>
+                    <span>Personalizar Sitio</span>
+                </a>
+            </li>
+
+            <!-- Alternador de la barra lateral -->
+            <div class="text-center d-none d-md-inline">
+                <button class="rounded-circle border-0" id="sidebarToggle"></button>
+            </div>
+
+        </ul>
+        <!-- Fin de la barra lateral -->
+
+        <!-- Contenedor de contenido -->
+        <div id="content-wrapper" class="d-flex flex-column">
+
+            <!-- Contenido principal -->
+            <div id="content">
+
+                <!-- Barra superior -->
+                <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+                    <div class="container-fluid">
+                        <h1 class="h3 mb-0 text-gray-800">Dashboard del Administrador</h1>
+                    </div>
+                </nav>
+                <!-- Fin de la barra superior -->
+
+                <!-- Inicio del contenido de la página -->
+                <div class="container-fluid">
+
+                    <!-- Fila de contenido -->
+                    <div class="row">
+
+                        <!-- Penca más popular -->
+                        <div class="col-xl-4 col-md-6 mb-4">
+                            <div class="card border-left-primary shadow h-100 py-2">
+                                <div class="card-body">
+                                    <div class="row no-gutters align-items-center">
+                                        <div class="col mr-2">
+                                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                                                Penca más popular
+                                            </div>
+                                            <div class="h5 mb-0 font-weight-bold text-gray-800" id="pencaMasPopular">
+                                                <!-- Datos del backend -->
+                                            </div>
+                                        </div>
+                                        <div class="col-auto">
+                                            <i class="fas fa-star fa-2x text-gray-300"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Top 3 usuarios con más aciertos -->
+                        <div class="col-xl-8 col-md-6 mb-4">
+                            <div class="card border-left-success shadow h-100 py-2">
+                                <div class="card-body">
+                                    <div class="row no-gutters align-items-center">
+                                        <div class="col mr-2">
+                                            <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
+                                                Top 3 Usuarios con más aciertos
+                                            </div>
+                                            <div class="h5 mb-0 font-weight-bold text-gray-800" id="topUsuarios">
+                                                <!-- Datos del backend -->
+                                            </div>
+                                        </div>
+                                        <div class="col-auto">
+                                            <i class="fas fa-user fa-2x text-gray-300"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <!-- Fin de la fila de contenido -->
+
+                </div>
+                <!-- Fin del contenido de la página -->
+
+            </div>
+            <!-- Fin del contenido principal -->
+
+            <!-- Pie de página -->
+            <footer class="sticky-footer bg-white">
+                <div class="container my-auto">
+                    <div class="copyright text-center my-auto">
+                        <span>© Pencas Deportivas 2024</span>
+                    </div>
+                </div>
+            </footer>
+            <!-- Fin del pie de página -->
+
+        </div>
+        <!-- Fin del contenedor de contenido -->
+
+    </div>
+    <!-- Fin del contenedor de la página -->
+
+    <!-- Modales -->
+    <!-- Modal Administrar Pencas -->
+    <div class="modal fade" id="modalAdministrarPencas" tabindex="-1" role="dialog" aria-labelledby="modalAdministrarPencasLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalAdministrarPencasLabel">Administrar Pencas</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <!-- Contenido del modal para administrar pencas -->
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Administrar Registros -->
+    <div class="modal fade" id="modalAdministrarRegistros" tabindex="-1" role="dialog" aria-labelledby="modalAdministrarRegistrosLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalAdministrarRegistrosLabel">Administrar Registros</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <!-- Contenido del modal para administrar registros -->
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Administrar Recordatorios -->
+    <div class="modal fade" id="modalAdministrarRecordatorios" tabindex="-1" role="dialog" aria-labelledby="modalAdministrarRecordatoriosLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalAdministrarRecordatoriosLabel">Administrar Recordatorios</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <!-- Contenido del modal para administrar recordatorios -->
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Administrar Premios -->
+    <div class="modal fade" id="modalAdministrarPremios" tabindex="-1" role="dialog" aria-labelledby="modalAdministrarPremiosLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalAdministrarPremiosLabel">Administrar Premios</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <!-- Contenido del modal para administrar premios -->
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Personalizar Sitio -->
+    <div class="modal fade" id="modalPersonalizarSitio" tabindex="-1" role="dialog" aria-labelledby="modalPersonalizarSitioLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalPersonalizarSitioLabel">Personalizar Sitio</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <!-- Contenido del modal para personalizar sitio -->
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap core JavaScript -->
+    <script src="../vendor/jquery/jquery.min.js"></script>
+    <script src="../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Core plugin JavaScript -->
+    <script src="../vendor/jquery-easing/jquery.easing.min.js"></script>
+
+    <!-- Scripts personalizados para todas las páginas -->
+    <script src="../js/sb-admin-2.min.js"></script>
+
+    <!-- Scripts personalizados para la página -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // Obtener datos del backend
+            fetch('https://api.example.com/admin-dashboard')
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('pencaMasPopular').innerText = data.pencaMasPopular;
+                    const topUsuarios = data.topUsuarios.map(usuario => `<div>${usuario}</div>`).join('');
+                    document.getElementById('topUsuarios').innerHTML = topUsuarios;
+
+                    // Deshabilitar condicionalmente el enlace de "Administrar Registros"
+                    const adminRegistrosLink = document.querySelector('a[data-target="#modalAdministrarRegistros"]');
+                    if (data.registroAbierto) {
+                        adminRegistrosLink.classList.add('disabled');
+                        document.getElementById('adminRegistrosText').classList.add('text-muted');
+                    }
+                })
+                .catch(error => console.error('Error al obtener datos del dashboard de administración:', error));
+        });
+    </script>
+
+</body>
+
+</html>

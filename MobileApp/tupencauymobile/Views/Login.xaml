@@ -1,0 +1,94 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="tupencauymobile.Views.Login"
+             xmlns:model="clr-namespace:tupencauymobile.Models"
+             xmlns:viewmodel="clr-namespace:tupencauymobile.ViewModels"
+             x:DataType="viewmodel:SitioVM"
+             Shell.NavBarIsVisible="False"
+             Title="Login">
+
+    <Grid>
+        <Grid RowDefinitions=".3*, .7*">
+            <Image WidthRequest="250" HeightRequest="190" ZIndex="1" Aspect="Fill" Source="logotupencauy.png"/>
+            <Grid ZIndex="0" BackgroundColor="MediumPurple" Opacity=".4"></Grid>
+            <Grid Grid.Row="1">
+                <RoundRectangle Margin="-5, -30, -5, -2"
+                CornerRadius="30, 30, 0, 0"
+                Fill="White"/>
+                <VerticalStackLayout Margin="40, 5, 40, 0">
+                    <Label FontAttributes="Bold" FontSize="Large">Ingresa sesión</Label>
+                    <Picker Title="Selecciona un sitio"
+                            ItemsSource="{Binding Sitios}"
+                            ItemDisplayBinding="{Binding Nombre}"
+                            SelectedItem="{Binding SitioSeleccionado}"
+                            Margin="0,20,0,0"/> 
+                    <Grid Margin="0, 30, 0, 0" ColumnDefinitions=".2*, .8*">
+                        <RoundRectangle BackgroundColor="LightGray"
+                        CornerRadius="10"
+                        HeightRequest="60"
+                        HorizontalOptions="Center"
+                        VerticalOptions="Center"
+                        WidthRequest="60"/>
+                        <Image HorizontalOptions="Center">
+                            <Image.Source>
+                                <FontImageSource
+                                    FontFamily="SolidIcons"
+                                    Glyph="&#xf0e0;"
+                                    Size="44"
+                                    Color="Purple" />
+                            </Image.Source>
+                        </Image>
+                        <Entry Grid.Column="1"
+                               x:Name="EmailEntry"
+                               Placeholder="Ingresa tu email/username"
+                               VerticalOptions="Center"
+                               PlaceholderColor="Gray"
+                               FontSize="15"/>
+                    </Grid>
+                    <Grid Margin="0, 30, 0, 0" ColumnDefinitions=".2*, .8*">
+                        <RoundRectangle BackgroundColor="LightGray"
+                                        CornerRadius="10"
+                                        HeightRequest="60"
+                                        HorizontalOptions="Center"
+                                        VerticalOptions="Center"
+                                        WidthRequest="60"/>
+                        <Image HorizontalOptions="Center">
+                            <Image.Source>
+                                <FontImageSource
+                                    FontFamily="SolidIcons"
+                                    Glyph="&#xf084;"
+                                    Size="44"
+                                    Color="Purple" />
+                            </Image.Source>
+                        </Image>
+                        <Entry Grid.Column="1"
+                               x:Name="PasswordEntry"
+                               Placeholder="Ingresa tu contraseña"
+                               IsPassword="True"
+                               VerticalOptions="Center"
+                               PlaceholderColor="Gray"
+                               FontSize="15"/>
+                    </Grid>
+                    <Button Clicked="LoginClicked"
+                            Text="Ingresar"
+                            Margin="0, 50, 0, 0"
+                            BackgroundColor="Purple"
+                            Opacity="0.8"
+                            FontAttributes="Bold"
+                            HeightRequest="60"
+                            />
+
+                    <Button Text="Ingresa con Google"
+                            Clicked="GoogleLoginClicked"
+                            Margin="0, 50, 0, 0"
+                            BackgroundColor="Red"
+                            Opacity="0.8"
+                            FontAttributes="Bold"
+                            HeightRequest="60"
+                            />
+                </VerticalStackLayout>
+            </Grid>
+        </Grid>
+    </Grid>
+</ContentPage>

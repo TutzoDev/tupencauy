@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tabla de posiciones - Pencas Deportivas</title>
+    <link href="../vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Nunito:200,300,400,600,700,800,900" rel="stylesheet">
+    <link href="../css/sb-admin-2.min.css" rel="stylesheet">
+    <link href="../css/styles.css" rel="stylesheet">
+    <style id="dynamic-styles"></style>
+</head>
+
+<body id="page-top">
+
+    <!-- Contenedor de la página -->
+    <div id="wrapper">
+
+        <!-- Barra lateral -->
+        <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+
+            <!-- Barra lateral - Marca -->
+            <div class="sidebar-brand d-flex align-items-center justify-content-center">
+                <div class="sidebar-brand-icon">
+                    <img src="../images/logo.png" alt="Logo" style="width: 40px; height: 40px;">
+                </div>
+                <div class="sidebar-brand-text mx-3" id="siteName">TuPenca UY</div>
+            </div>
+
+            <!-- Divisor -->
+            <hr class="sidebar-divider my-0">
+
+            <!-- Opción de menú - Pencas disponibles -->
+            <li class="nav-item">
+                <a class="nav-link" href="pencas-disponibles.html">
+                    <i class="fas fa-fw fa-list"></i>
+                    <span>Pencas disponibles</span>
+                </a>
+            </li>
+
+            <!-- Opción de menú - Tabla de posiciones Pencas -->
+            <li class="nav-item active">
+                <a class="nav-link" href="historial-apuestas.html">
+                    <i class="fas fa-fw fa-trophy"></i>
+                    <span>Tabla de posiciones Pencas</span>
+                </a>
+            </li>
+
+            <!-- Opción de menú - Ajustes del perfil -->
+            <li class="nav-item">
+                <a class="nav-link" href="ajustes-perfil.html">
+                    <i class="fas fa-fw fa-user"></i>
+                    <span>Ajustes del perfil</span>
+                </a>
+            </li>
+
+            <!-- Divisor -->
+            <hr class="sidebar-divider">
+
+            <!-- Alternador de la barra lateral -->
+            <div class="text-center d-none d-md-inline">
+                <button class="rounded-circle border-0" id="sidebarToggle"></button>
+            </div>
+
+            <!-- Opción de menú - Volver a todos los sitios -->
+            <li class="nav-item">
+                <a class="nav-link" href="sitios.html" onclick="logoutAndRedirect()">
+                    <i class="fas fa-fw fa-sign-out-alt"></i>
+                    <span>Volver a todos los sitios</span>
+                </a>
+            </li>
+
+        </ul>
+
+        <!-- Fin de la barra lateral -->
+        <!-- Contenedor de contenido -->
+        <div id="content-wrapper" class="d-flex flex-column">
+
+            <!-- Contenido principal -->
+            <div id="content">
+
+                <!-- Barra superior -->
+                <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+                    <ul class="navbar-nav ml-auto">
+                        <li class="nav-item dropdown no-arrow d-sm-none">
+                            <a class="nav-link dropdown-toggle" href="#" id="searchDropdown" role="button"
+                               data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i class="fas fa-search fa-fw"></i>
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-right p-3 shadow animated--grow-in"
+                                 aria-labelledby="searchDropdown">
+                                <form class="form-inline mr-auto w-100 navbar-search">
+                                    <div class="input-group">
+                                        <input type="text" class="form-control bg-light border-0 small"
+                                               placeholder="Search for..." aria-label="Search"
+                                               aria-describedby="basic-addon2">
+                                        <div class="input-group-append">
+                                            <button class="btn btn-primary" type="button">
+                                                <i class="fas fa-search fa-sm"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </li>
+
+                        <!-- Información del usuario -->
+                        <li class="nav-item dropdown no-arrow">
+                            <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
+                               data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <span class="mr-2 d-none d-lg-inline text-gray-600 small" id="userName">Usuario</span>
+                                <img class="img-profile rounded-circle" id="userProfileImage" src="">
+                            </a>
+                            <!-- Dropdown - Información del usuario -->
+                            <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
+                                 aria-labelledby="userDropdown">
+                                <a class="dropdown-item" href="ajustes-perfil.html">
+                                    <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
+                                    Perfil
+                                </a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="sitios.html" onclick="logoutAndRedirect()">
+                                    <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+                                    Cerrar sesión
+                                </a>
+                            </div>
+                        </li>
+
+                        <!-- Saldo disponible -->
+                        <li class="nav-item dropdown no-arrow mx-1">
+                            <div class="nav-link">
+                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">Saldo disponible: $<span id="saldoDisponible">0.00</span></span>
+                            </div>
+                        </li>
+
+                    </ul>
+                </nav>
+                <!-- Fin de la barra superior -->
+                <!-- Inicio del contenido de la página -->
+                <div class="container-fluid">
+
+                    <!-- Encabezado de la página -->
+                    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+                        <h1 class="h3 mb-0 text-gray-800">Pencas Top 10</h1>
+                    </div>
+
+                    <!-- Panel de Pencas Top 10 -->
+                    <div id="top10PencasContainer">
+                        <!-- Contenido poblado por JavaScript -->
+                    </div>
+
+                </div>
+                <!-- Fin del contenido de la página -->
+
+            </div>
+            <!-- Fin del contenido principal -->
+            <!-- Pie de página -->
+            <footer class="sticky-footer bg-white">
+                <div class="container my-auto">
+                    <div class="copyright text-center my-auto">
+                        <span>© TuPenca UY 2024</span>
+                    </div>
+                </div>
+            </footer>
+            <!-- Fin del pie de página -->
+
+        </div>
+        <!-- Fin del contenedor de contenido -->
+
+    </div>
+    <!-- Fin del contenedor de la página -->
+    <!-- Botón de desplazamiento hacia arriba -->
+    <a class="scroll-to-top rounded" href="#page-top">
+        <i class="fas fa-angle-up"></i>
+    </a>
+
+    <!-- Núcleo de JavaScript -->
+    <script src="../vendor/jquery/jquery.min.js"></script>
+    <script src="../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="../vendor/jquery-easing/jquery.easing.min.js"></script>
+    <script src="../js/sb-admin-2.min.js"></script>
+    <script src="../js/api.js"></script>
+    <script src="../js/scripts.js"></script>
+
+    <!-- Script para manejar el cierre de sesión y redirección -->
+    <script>
+        function logoutAndRedirect() {
+            // Cerrar sesión
+            localStorage.removeItem('userSession');
+            // Redirigir a la página de sitios
+            window.location.href = 'sitios.html';
+        }
+
+        document.addEventListener('DOMContentLoaded', async function () {
+            verifySession();
+            loadSiteInfo();
+            await loadUserInfo();
+
+            // Obtener el título del sitio desde localStorage
+            var siteTitle = localStorage.getItem('siteTitle');
+            if (siteTitle) {
+                document.getElementById('siteName').textContent = siteTitle;
+            }
+
+            // Asignar una imagen de perfil aleatoria al usuario
+            var profileImages = [
+                '../images/profiles/profile1.png',
+                '../images/profiles/profile2.png',
+                '../images/profiles/profile3.png',
+                '../images/profiles/profile4.png',
+                '../images/profiles/profile5.png'
+            ];
+            var randomIndex = Math.floor(Math.random() * profileImages.length);
+            document.getElementById('userProfileImage').src = profileImages[randomIndex];
+
+            // Llamada a la API para obtener las pencas disponibles
+            var tenantId = localStorage.getItem('tenantId');
+            var idUser = localStorage.getItem('idUser');
+            fetch(`http://localhost:5234/api/Sitios/${tenantId}/Pencas?idUser=${idUser}`, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Bearer ' + localStorage.getItem('token')
+                }
+            })
+                .then(response => response.json())
+                .then(data => {
+                    var top10PencasContainer = document.getElementById('top10PencasContainer');
+                    if (data.length === 0) {
+                        top10PencasContainer.innerHTML = '<p class="text-center">No hay pencas disponibles</p>';
+                    } else {
+                        data.forEach(penca => {
+                            var pencaCard = `
+                                    <div class="card shadow mb-4">
+                                        <div class="card-header py-3">
+                                            <h6 class="m-0 font-weight-bold text-primary">${penca.nombre}</h6>
+                                        </div>
+                                        <div class="card-body">
+                                            <div class="table-responsive">
+                                                <table class="table table-bordered" width="100%" cellspacing="0">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Posición</th>
+                                                            <th>Usuario</th>
+                                                            <th>Puntaje</th>
+                                                            <th>Aciertos</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody id="top10-${penca.id}">
+                                                        <!-- Contenido poblado por JavaScript -->
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                `;
+                            top10PencasContainer.insertAdjacentHTML('beforeend', pencaCard);
+
+                            // Obtener el top 10 de usuarios para cada penca
+                            fetch(`http://localhost:5234/api/Pencas/Sitio/${tenantId}/Penca/${penca.id}/GetUsuarios`, {
+                                method: 'GET',
+                                headers: {
+                                    'Content-Type': 'application/json',
+                                    'Authorization': 'Bearer ' + localStorage.getItem('token')
+                                }
+                            })
+                                .then(response => {
+                                    if (!response.ok) {
+                                        throw new Error('Network response was not ok');
+                                    }
+                                    return response.json();
+                                })
+                                .then(users => {
+                                    var top10TableBody = document.getElementById(`top10-${penca.id}`);
+                                    if (users.length === 0) {
+                                        top10TableBody.innerHTML = '<tr><td colspan="4" class="text-center">No hay usuarios en esta penca</td></tr>';
+                                    } else {
+                                        // Ordenar los usuarios primero por puntos y luego por aciertos
+                                        users.sort((a, b) => {
+                                            if (b.puntaje !== a.puntaje) {
+                                                return b.puntaje - a.puntaje;
+                                            }
+                                            return b.aciertos - a.aciertos;
+                                        });
+                                        users.slice(0, 10).forEach((user, index) => {
+                                            var row = `
+                                                    <tr>
+                                                        <td>${index + 1}</td>
+                                                        <td>${user.nombreUsuario}</td>
+                                                        <td>${user.puntaje}</td>
+                                                        <td>${user.aciertos}</td>
+                                                    </tr>
+                                                `;
+                                            top10TableBody.insertAdjacentHTML('beforeend', row);
+                                        });
+                                    }
+                                })
+                                .catch(error => console.error(`Error al obtener el top 10 de la penca ${penca.id}:`, error));
+                        });
+                    }
+                })
+                .catch(error => console.error('Error al obtener las pencas:', error));
+        });
+    </script>
+
+</body>
+
+</html>

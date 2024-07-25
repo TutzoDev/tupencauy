@@ -1,0 +1,75 @@
+﻿@model tupencauy.ViewModels.SuperAdminViewModel
+
+@{
+    ViewData["Title"] = "Sitios";
+}
+
+<h1>Panel de sitios - tupenca.uy</h1>
+<p class="end">
+    <a asp-action="RequestSite" asp-controller="Sitios">Crear nuevo Sitio</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>@Html.DisplayNameFor(model => model.Sitios.First().Nombre)</th>
+            <th>@Html.DisplayNameFor(model => model.Sitios.First().Url)</th>
+            <th>@Html.DisplayNameFor(model => model.Sitios.First().Status)</th>
+            <th>Acción</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var sitio in Model.Sitios)
+        {
+            <tr>
+                <td>@sitio.Nombre</td>
+                <td>@sitio.Url</td>
+                <td>
+                    @if (sitio.Status == null)
+                    {
+                        <span>Sin aprobar</span>
+                    }
+                    else if (sitio.Status == false)
+                    {
+                        <span>Deshabilitado</span>
+                    }
+                    else if (sitio.Status == true)
+                    {
+                        <span>Habilitado</span>
+                    }
+                </td>
+                <td>
+                    @if (sitio.Status == null)
+                    {
+                        <form asp-action="AprobarSitio" asp-controller="Sitios" method="post" style="display:inline;">
+                            @Html.AntiForgeryToken()
+                            <input type="hidden" name="id" value="@sitio.Id" />
+                            <button type="submit" class="btn btn-primary">Aprobar</button>
+                        </form>
+                    }
+                    else if (sitio.Status == false)
+                    {
+                        <form asp-action="HabilitarSitio" asp-controller="Sitios" method="post" style="display:inline;">
+                            @Html.AntiForgeryToken()
+                            <input type="hidden" name="id" value="@sitio.Id" />
+                            <button type="submit" class="btn btn-success">Habilitar</button>
+                        </form>
+                    }
+                    else if (sitio.Status == true)
+                    {
+                        <form asp-action="DeshabilitarSitio" asp-controller="Sitios" method="post" style="display:inline;">
+                            @Html.AntiForgeryToken()
+                            <input type="hidden" name="id" value="@sitio.Id" />
+                            <button type="submit" class="btn btn-danger">Dar de baja</button>
+                        </form>
+                    }
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-controller="Sitios" asp-route-id="@sitio.Id">Editar</a> |
+                    <a asp-action="Details" asp-controller="Sitios" asp-route-id="@sitio.Id">Detalles</a> |
+                    <a asp-action="Delete" asp-controller="Sitios" asp-route-id="@sitio.Id">Borrar</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

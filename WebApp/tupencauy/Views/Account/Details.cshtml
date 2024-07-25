@@ -1,0 +1,12 @@
+﻿@model tupencauy.Models.AppUser
+
+<h1>Detalles del Usuario</h1>
+
+<ul>
+    <li><strong>Nombre:</strong> @Model.Name</li>
+    <li><strong>UserName:</strong> @Model.UserName</li>
+    <li><strong>Email:</strong> @Model.Email</li>
+    <!-- Agregar más propiedades del usuario según sea necesario -->
+</ul>
+
+<a asp-controller="SuperAdmin" asp-action="Usuarios">Volver a la lista de usuarios</a>

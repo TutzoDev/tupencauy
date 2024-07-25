@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - TuPenca UY</title>
+    <link rel="stylesheet" href="../css/styles.css">
+    <link href="../css/estilo-background.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-xl-6 col-lg-7 col-md-9">
+                <div class="card o-hidden border-0 shadow-lg my-5">
+                    <div class="card-body p-0">
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="p-5">
+                                    <div class="text-center">
+                                        <h1 class="h4 text-gray-900 mb-4">Bienvenido a TuPenca UY</h1>
+                                    </div>
+                                    <form id="loginForm">
+                                        <div class="form-group">
+                                            <input type="text" class="form-control form-control-user" id="username" placeholder="Ingrese su nombre de usuario..." required>
+                                        </div>
+                                        <div class="form-group">
+                                            <input type="password" class="form-control form-control-user" id="password" placeholder="Contraseña" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <input type="hidden" id="tenantId" value="">
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="custom-control custom-checkbox small">
+                                                <input type="checkbox" class="custom-control-input" id="rememberMe">
+                                                <label class="custom-control-label" for="rememberMe">Recordarme</label>
+                                            </div>
+                                        </div>
+                                        <button type="submit" class="btn btn-primary btn-user btn-block">Ingresar</button>
+                                    </form>
+                                    <hr>
+                                    <div class="text-center">
+                                        <button class="btn btn-danger btn-user btn-block" id="handleGoogleLogin" name="prov" value="Google">
+                                            <i class="fab fa-google fa-fw"></i> Ingresar con Google
+                                        </button>
+                                    </div>
+                                    <hr>
+                                    <div class="text-center">
+                                        <button class="btn btn-secondary btn-user btn-block" id="backToSites">
+                                            Volver a todos los sitios
+                                        </button>
+                                    </div>
+                                    <hr>
+                                    <div class="text-center">
+                                        <a class="small" href="register.html">¡Crea una cuenta!</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Núcleo de JavaScript -->
+    <script src="../vendor/jquery/jquery.min.js"></script>
+    <script src="../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="../vendor/jquery-easing/jquery.easing.min.js"></script>
+    <script src="../js/auth.js"></script>
+    <script>
+
+        document.getElementById('backToSites').addEventListener('click', function () {
+            // Redireccionar al usuario a la página de selección de sitios
+            window.location.href = 'sitios.html';
+        });
+
+        document.addEventListener('DOMContentLoaded', function () {
+            const tenantId = localStorage.getItem('tenantId');
+            if (!tenantId) {
+                // Si no hay tenantId, redirigir a la página de selección de sitios
+                window.location.href = 'sitios.html';
+            } else {
+                // Establecer el tenantId en el formulario de login
+                document.getElementById('tenantId').value = tenantId;
+            }
+        });
+
+        document.getElementById('handleGoogleLogin').addEventListener('click', handleGoogleLogin);
+
+    </script>
+</body>
+</html>

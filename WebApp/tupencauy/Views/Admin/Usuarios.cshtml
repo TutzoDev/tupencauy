@@ -1,0 +1,78 @@
+﻿@model tupencauy.ViewModels.AdminViewModel
+
+@{
+    ViewData["Title"] = "Admin - tupenca.uy";
+}
+
+<h1>Panel de usuarios - tupenca.uy</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Username</th>
+            <th>Nombre</th>
+            <th>Email</th>
+            <th>Sitio</th>
+            <th>Status</th>
+            <th>Saldo</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var usuario in Model.Usuarios)
+        {
+            <tr>
+                <td>@usuario.UserName</td>
+                <td>@usuario.Name</td>
+                <td>@usuario.Email</td>
+                <td>@Model.Sitio.Nombre</td>
+                <td>
+                    @if (usuario.Status == null)
+                    {
+                        <span>Sin aprobar</span>
+                    }
+                    else if (usuario.Status == false)
+                    {
+                        <span>Deshabilitado</span>
+                    }
+                    else if (usuario.Status == true)
+                    {
+                        <span>Habilitado</span>
+                    }
+                </td>
+                <td>@usuario.Saldo</td>
+                <td>
+                    @if (usuario.Status == null)
+                    {
+                        <form asp-action="AprobarUsuario" asp-controller="Admin" method="post" style="display:inline;">
+                            @Html.AntiForgeryToken()
+                            <input type="hidden" name="id" value="@usuario.Id" />
+                            <button type="submit" class="btn btn-primary">Aprobar</button>
+                        </form>
+                    }
+                    else if (usuario.Status == false)
+                    {
+                        <form asp-action="HabilitarUsuario" asp-controller="Admin" method="post" style="display:inline;">
+                            @Html.AntiForgeryToken()
+                            <input type="hidden" name="id" value="@usuario.Id" />
+                            <button type="submit" class="btn btn-success">Habilitar</button>
+                        </form>
+                    }
+                    else if (usuario.Status == true)
+                    {
+                        <form asp-action="DeshabilitarUsuario" asp-controller="Admin" method="post" style="display:inline;">
+                            @Html.AntiForgeryToken()
+                            <input type="hidden" name="id" value="@usuario.Id" />
+                            <button type="submit" class="btn btn-danger">Deshabilitar</button>
+                        </form>
+                    }
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-controller="Account" asp-route-id="@usuario.Id">Editar</a> |
+                    <a asp-action="Details" asp-controller="Account" asp-route-id="@usuario.Id">Detalles</a> |
+                    <a asp-action="Delete" asp-controller="Account" asp-route-id="@usuario.Id">Borrar</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

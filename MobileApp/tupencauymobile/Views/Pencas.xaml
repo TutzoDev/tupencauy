@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:model="clr-namespace:tupencauymobile.Models"
+             x:Class="tupencauymobile.Views.Pencas"
+             xmlns:viewmodel="clr-namespace:tupencauymobile.ViewModels"
+             x:DataType="viewmodel:PencaVM"
+             Title="{Binding Titulo}">
+
+    <ContentPage.ToolbarItems>
+        <ToolbarItem IconImageSource="profileimage.png"
+                     Order="Primary"
+                     Priority="1"
+                     Clicked="OnProfileClicked" />
+    </ContentPage.ToolbarItems>
+
+    <Grid>
+        <CollectionView ItemsSource="{Binding Pencas}"
+                        SelectionMode="Single">
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="model:Penca">
+                    <VerticalStackLayout Padding="10">
+                        <HorizontalStackLayout>
+                            <Frame BackgroundColor="Purple" WidthRequest="350" HeightRequest="90" Opacity="0.8" Padding="5">
+                                <Frame.Triggers>
+                                    <DataTrigger TargetType="Frame" Binding="{Binding Inscrito}" Value="false">
+                                        <Setter Property="IsEnabled" Value="False" />
+                                    </DataTrigger>
+                                </Frame.Triggers>
+                                <Frame.GestureRecognizers>
+                                    <TapGestureRecognizer  Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:PencaVM}}, Path=PencaClickedCommand}" CommandParameter="{Binding Id}"/>
+                                </Frame.GestureRecognizers>
+                                <Grid>
+                                    <Label VerticalOptions="Start" HorizontalOptions="End" TextColor="White" FontSize="10" Padding="10">
+                                        <Label.Triggers>
+                                            <DataTrigger TargetType="Label" Binding="{Binding Inscrito}" Value="false">
+                                                <Setter Property="Text" Value="No inscripto" />
+                                            </DataTrigger>
+                                        </Label.Triggers>
+                                    </Label>
+                                    <VerticalStackLayout>
+                                        <HorizontalStackLayout>
+                                            <Label Text="{Binding Nombre}" VerticalOptions="Center" HorizontalOptions="Start" TextColor="White" FontSize="20" Padding="10"/>
+                                        </HorizontalStackLayout>
+                                        <HorizontalStackLayout>
+                                            <Label Text="{Binding FechaInicio, StringFormat='{0:dd/MM/yyyy}'}" VerticalOptions="Center"  TextColor="White" Padding="5" FontAttributes="Bold" FontSize="Small" />
+                                            <Label Text="-" VerticalOptions="Center" HorizontalOptions="End" TextColor="White" FontSize="Large"/>
+                                            <Label Text="{Binding FechaFin, StringFormat='{0:dd/MM/yyyy}'}" VerticalOptions="Center" TextColor="White" FontSize="Small" Padding="5" FontAttributes="Bold"/>
+                                        </HorizontalStackLayout>
+                                    </VerticalStackLayout>
+                                </Grid>
+                            </Frame>
+                        </HorizontalStackLayout>
+                        <Label>
+                            <Label.Triggers>
+                                <DataTrigger TargetType="Label" Binding="{Binding Inscrito}" Value="false">
+                                    <Setter Property="Text" Value="(Puedes inscribirte desde nuestra web)" />
+                                </DataTrigger>
+                            </Label.Triggers>
+                        </Label>
+                    </VerticalStackLayout>
+                    
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+
+        <ActivityIndicator IsVisible="{Binding Ocupado}"
+                           IsRunning="{Binding Ocupado}"
+                           HorizontalOptions="FillAndExpand"
+                           VerticalOptions="CenterAndExpand"
+                           Grid.RowSpan="2"
+                           Grid.ColumnSpan="2"/>
+    </Grid>
+    
+</ContentPage>

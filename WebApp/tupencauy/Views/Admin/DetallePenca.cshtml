@@ -1,0 +1,39 @@
+﻿@model tupencauy.ViewModels.DetallePencaVM
+
+@{
+    ViewData["Title"] = "Tabla de la penca";
+}
+
+<div class="container mt-4 mb-4">
+    <h1 class="text-center">@Model.Nombre</h1>
+
+    <div class="card shadow" style="background-color: #8a2be2;">
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-striped table-hover" style="background-color: #e6e6fa;">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th scope="col">Nombre Usuario</th>
+                            <th scope="col">Aciertos</th>
+                            <th scope="col">Puntaje</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var usuario in Model.Usuarios.OrderByDescending(u => u.Puntaje).ThenByDescending(u => u.Aciertos))
+                        {
+                            <tr>
+                                <td>@usuario.Nombre</td>
+                                <td>@usuario.Aciertos</td>
+                                <td>@usuario.Puntaje</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <div class="mt-4">
+        <a href="@Url.Action("Index", "Admin")" class="btn btn-primary">Volver</a>
+    </div>
+</div>
